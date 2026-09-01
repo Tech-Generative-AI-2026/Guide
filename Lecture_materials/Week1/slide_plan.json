@@ -1,0 +1,173 @@
+{
+  "deck_title": "생성형 AI — 강의계획",
+  "audience": "생성형 AI 과목 1주차 수강생",
+  "style_preset": "Kami Academic / kami-paper",
+  "source": "../01주차_배포용.md",
+  "mapping_rule": "배포용 MD의 각 ##를 순서대로 정확히 한 장에 대응하며 별도 장표를 추가하지 않는다.",
+  "slide_count": 12,
+  "slides": [
+    {
+      "id": "s01-outline",
+      "title": "Outline",
+      "type": "cover",
+      "teaching_goal": "Outline의 핵심 내용과 판단 기준을 설명한다.",
+      "core_message": "강의계획서에서 학습 목표·15주 진행 순서·평가와 기말프로젝트를 확인한다.",
+      "source_refs": [
+        "../01주차_배포용.md:line-6"
+      ],
+      "layout": "kami-cover",
+      "visual": "outline blocks",
+      "density": "low"
+    },
+    {
+      "id": "s02-section",
+      "title": "강의계획서의 한 문장",
+      "type": "two-column-compare",
+      "teaching_goal": "강의계획서의 한 문장의 핵심 내용과 판단 기준을 설명한다.",
+      "core_message": "텍스트를 숫자로 바꾸고 딥러닝 모델이 패턴을 학습해 새로운 텍스트를 만드는 원리를 배운다.",
+      "source_refs": [
+        "../01주차_배포용.md:line-20"
+      ],
+      "layout": "paired-concept-panels",
+      "visual": "paired explanation blocks",
+      "density": "low"
+    },
+    {
+      "id": "s03-section",
+      "title": "이 강의가 기르는 두 능력",
+      "type": "two-column-compare",
+      "teaching_goal": "이 강의가 기르는 두 능력의 핵심 내용과 판단 기준을 설명한다.",
+      "core_message": "토큰화·임베딩·Attention·GPT 구조가 텍스트를 처리하는 순서를 설명한다.",
+      "source_refs": [
+        "../01주차_배포용.md:line-33"
+      ],
+      "layout": "paired-concept-panels",
+      "visual": "paired explanation blocks",
+      "density": "low"
+    },
+    {
+      "id": "s04-1-8",
+      "title": "1–8주차 진행 계획",
+      "type": "table-to-cards",
+      "teaching_goal": "1–8주차 진행 계획의 핵심 내용과 판단 기준을 설명한다.",
+      "core_message": "전반부는 학습 원리에서 시작해 텍스트 표현·Attention·Transformer block을 차례로 조립한다.",
+      "source_refs": [
+        "../01주차_배포용.md:line-47"
+      ],
+      "layout": "table-and-context",
+      "visual": "structured comparison table",
+      "density": "medium"
+    },
+    {
+      "id": "s05-9-15",
+      "title": "9–15주차 진행 계획",
+      "type": "table-to-cards",
+      "teaching_goal": "9–15주차 진행 계획의 핵심 내용과 판단 기준을 설명한다.",
+      "core_message": "후반부는 언어모델 학습과 생성에서 시작해 Classification 미세조정과 Instruction 미세조정을 구분한 뒤 프로젝트로 이어진다.",
+      "source_refs": [
+        "../01주차_배포용.md:line-66"
+      ],
+      "layout": "table-and-context",
+      "visual": "structured comparison table",
+      "density": "medium"
+    },
+    {
+      "id": "s06-section",
+      "title": "수업 운영",
+      "type": "two-column-compare",
+      "teaching_goal": "수업 운영의 핵심 내용과 판단 기준을 설명한다.",
+      "core_message": "이론은 손으로 계산할 수 있는 작은 예제에서 시작해 실제 텐서 연산으로 확장한다.",
+      "source_refs": [
+        "../01주차_배포용.md:line-84"
+      ],
+      "layout": "paired-concept-panels",
+      "visual": "paired explanation blocks",
+      "density": "low"
+    },
+    {
+      "id": "s07-section",
+      "title": "평가 구조",
+      "type": "table-to-cards",
+      "teaching_goal": "평가 구조의 핵심 내용과 판단 기준을 설명한다.",
+      "core_message": "중간고사는 35%, 기말프로젝트는 35%, 프로젝트 발표는 10%이다.",
+      "source_refs": [
+        "../01주차_배포용.md:line-98"
+      ],
+      "layout": "table-and-context",
+      "visual": "structured comparison table",
+      "density": "medium"
+    },
+    {
+      "id": "s08-section",
+      "title": "기말프로젝트",
+      "type": "two-column-compare",
+      "teaching_goal": "기말프로젝트의 데이터·설계 범위와 외부 자료 제한을 설명한다.",
+      "core_message": "제공된 합성 언어 데이터로 모델을 학습한다.",
+      "source_refs": [
+        "../01주차_배포용.md:line-113"
+      ],
+      "layout": "paired-concept-panels",
+      "visual": "paired explanation blocks",
+      "density": "low"
+    },
+    {
+      "id": "s09-ai",
+      "title": "생성형 AI와 텍스트 생성",
+      "type": "two-column-compare",
+      "teaching_goal": "생성형 AI와 텍스트 생성의 핵심 내용과 판단 기준을 설명한다.",
+      "core_message": "텍스트 생성은 앞에 주어진 문맥에 이어질 글자나 단어 조각을 반복해서 선택하는 일이다.",
+      "source_refs": [
+        "../01주차_배포용.md:line-128"
+      ],
+      "layout": "paired-concept-panels",
+      "visual": "paired explanation blocks",
+      "density": "low"
+    },
+    {
+      "id": "s10-ai",
+      "title": "문제와 현재 해법 — 왜 텍스트 생성에 생성형 AI를 사용하는가?",
+      "type": "two-column-compare",
+      "teaching_goal": "문제와 현재 해법 — 왜 텍스트 생성에 생성형 AI를 사용하는가?의 핵심 내용과 판단 기준을 설명한다.",
+      "core_message": "중심 문제는 사람이 모든 문장 규칙을 작성하지 않고 새 문맥에 이어지는 텍스트를 만드는 것이다.",
+      "source_refs": [
+        "../01주차_배포용.md:line-141"
+      ],
+      "layout": "paired-concept-panels",
+      "visual": "paired explanation blocks",
+      "density": "low"
+    },
+    {
+      "id": "s11-2",
+      "title": "2주차로 이어지는 출발점",
+      "type": "two-column-compare",
+      "teaching_goal": "2주차로 이어지는 출발점의 핵심 내용과 판단 기준을 설명한다.",
+      "core_message": "데이터가 모델이 계산할 수 있는 수치·벡터·행렬·텐서로 바뀌는 과정을 배운다.",
+      "source_refs": [
+        "../01주차_배포용.md:line-154"
+      ],
+      "layout": "paired-concept-panels",
+      "visual": "paired explanation blocks",
+      "density": "low"
+    },
+    {
+      "id": "s12-summary",
+      "title": "Summary",
+      "type": "summary",
+      "teaching_goal": "Summary의 핵심 내용과 판단 기준을 설명한다.",
+      "core_message": "전반부는 학습 원리와 GPT 구조, 후반부는 언어모델 학습·생성·미세조정으로 진행한다.",
+      "source_refs": [
+        "../01주차_배포용.md:line-168"
+      ],
+      "layout": "kami-end",
+      "visual": "summary panels",
+      "density": "low"
+    }
+  ],
+  "revision_notes": [
+    "최초 생성: ## 1개당 슬라이드 1개, 첫 Outline은 cover, 마지막 Summary는 end.",
+    "2026-08-28: 학생용 제목을 과목명과 강의 주제만 남긴 공식형으로 정리하고 제작 메타 문구를 제거.",
+    "2026-08-29: 수업 운영 용어를 정리하고 평가표를 1:1 폭으로 축소했으며 평가 설명 열을 제거하고 기말프로젝트 장표 제목과 구획명을 간결하게 수정.",
+    "2026-08-31: 11–12주차가 Classification fine-tuning임을 주차 계획표에 명시해 Instruction fine-tuning과 구분."
+  ]
+}
+

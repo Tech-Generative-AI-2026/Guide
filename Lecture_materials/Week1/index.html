@@ -1,0 +1,229 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>생성형 AI — 강의계획</title><meta name="description" content="생성형 AI 1주차 강의 슬라이드"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231b365d'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-size='20' fill='%23faf9f5'%3E生%3C/text%3E%3C/svg%3E"><script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:'global'}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script><style>
+:root{--parchment:#f5f4ed;--ivory:#faf9f5;--sand:#e8e6dc;--sand-dark:#d8d5c7;--ink:#1b365d;--ink-light:#b5c8dc;--near:#141413;--warm:#3d3d3a;--olive:#504e49;--stone:#6b6a64;--tag:#e4ecf5;--serif:"Noto Serif KR","Source Han Serif K","NanumMyeongjo",Georgia,serif;--sans:Pretendard,"Noto Sans KR","Apple SD Gothic Neo",system-ui,sans-serif;--mono:"JetBrains Mono",D2Coding,monospace}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden}body{background:#111b29;color:var(--near);font-family:var(--sans);-webkit-font-smoothing:antialiased}button{font:inherit}
+#viewport{position:fixed;inset:0;display:grid;place-items:center;overflow:hidden}#stage{width:1920px;height:1080px;position:relative;overflow:hidden;transform-origin:center;background:var(--parchment);box-shadow:0 24px 80px rgba(0,0,0,.28)}#deck{height:1080px;display:flex;transition:transform .75s cubic-bezier(.77,0,.175,1);will-change:transform}
+.slide{position:relative;flex:0 0 1920px;width:1920px;height:1080px;padding:76px 100px 70px;overflow:hidden;background:var(--parchment)}.slide.dark{background:var(--ink);color:var(--ivory)}
+.slide::after{content:"";position:absolute;width:430px;height:430px;right:-250px;bottom:-260px;border:1px solid var(--sand-dark);border-radius:50%;pointer-events:none}.dark::after{border-color:rgba(250,249,245,.13)}
+.chrome{position:absolute;top:28px;left:100px;right:100px;display:flex;justify-content:space-between;align-items:center;font:18px var(--mono);letter-spacing:.08em;color:var(--stone);z-index:3}.dark .chrome{color:rgba(250,249,245,.62)}.brand{display:flex;align-items:center;gap:14px}.mark{display:grid;place-items:center;width:34px;height:34px;border:1px solid currentColor;border-radius:50%;font:18px var(--serif)}
+.slide-foot{position:absolute;left:100px;right:100px;bottom:22px;display:flex;justify-content:space-between;color:var(--stone);font:17px var(--mono);letter-spacing:.03em;z-index:3}.dark .slide-foot{color:rgba(250,249,245,.62)}
+.slide-inner{width:100%;height:100%;min-height:0;display:grid;align-content:center;gap:30px;position:relative;z-index:2}.title-block{display:grid;gap:12px}.section-num,.eyebrow{margin:0;font:19px/1.2 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--ink)}.dark .section-num,.dark .eyebrow{color:rgba(250,249,245,.68)}
+h1,h2,h3,p{margin:0}h1,h2,h3{font-family:var(--serif);font-weight:500}h1{font-size:76px;line-height:1.13;letter-spacing:-.035em}h2{font-size:52px;line-height:1.18;letter-spacing:-.025em;max-width:30ch}h3{font-size:31px;line-height:1.28;color:var(--ink);margin-bottom:16px}em{font-style:normal}
+.content{min-height:0}.groups{display:grid;gap:24px}.groups.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}.groups.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}.group{min-width:0;padding:30px 34px;border-top:2px solid var(--ink);background:var(--ivory)}.preamble{font-size:27px;line-height:1.45;color:var(--warm);margin-bottom:22px}
+.group p,.group li,.content>div>p,.content>div>ul li{font-size:26px;line-height:1.42;color:var(--warm)}.group ul,.preamble ul{margin:0;padding-left:25px;display:grid;gap:10px}.group code,.preamble code{font-family:var(--mono);font-size:.88em;color:var(--ink);background:var(--tag);padding:2px 6px;border-radius:3px}
+.density-high .group{padding:24px 28px}.density-high .group p,.density-high .group li,.density-high .preamble{font-size:23px;line-height:1.38}.density-high h2{font-size:48px}
+.cover-grid{grid-template-columns:1.08fr .92fr;gap:88px;align-items:center}.cover-title{display:grid;gap:28px}.cover-title h1{color:var(--ivory);max-width:16ch}.cover-note{font:20px var(--mono);color:rgba(250,249,245,.62)}.cover-outline .groups{gap:18px}.cover-outline .group{background:transparent;border-top:1px solid rgba(250,249,245,.28);padding:24px 0}.cover-outline .group h3{color:var(--ivory);font-size:30px}.cover-outline .group li,.cover-outline .group p{color:rgba(250,249,245,.78);font-size:23px}.cover-outline .preamble{color:rgba(250,249,245,.78)}
+.image-layout{display:grid;grid-template-columns:1.08fr .92fr;gap:52px;align-items:center}.image-layout figure{margin:0;background:var(--ivory);border:1px solid var(--sand-dark);padding:22px}.image-layout img{display:block;width:100%;max-height:590px;object-fit:contain}.image-layout figcaption{margin-top:12px;font:17px var(--mono);color:var(--stone)}
+.code-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}.codebox{background:var(--ivory);border:1px solid var(--sand-dark);padding:26px 30px}.code-label{font:17px var(--mono);color:var(--ink);letter-spacing:.08em;margin-bottom:16px}.codebox pre{margin:0;white-space:pre-wrap;font:21px/1.5 var(--mono);color:var(--near)}
+.formula-layout{display:grid;grid-template-columns:1.02fr .98fr;gap:48px;align-items:center}.formula-stack{display:grid;gap:18px}.formula{display:grid;place-items:center;min-height:130px;padding:26px;background:var(--ivory);border-top:2px solid var(--ink);font-size:31px;overflow:hidden}.formula.compact{min-height:100px;margin-top:18px;padding:18px;font-size:26px}
+.table-layout{display:grid;grid-template-columns:.64fr 1.36fr;gap:42px;align-items:center}.table-layout.equal-columns{grid-template-columns:1fr 1fr}.table-wrap{min-width:0}.table-wrap table{width:100%;border-collapse:collapse;background:var(--ivory);font-size:22px}.table-wrap th,.table-wrap td{padding:14px 18px;border:1px solid var(--sand-dark);text-align:left}.table-wrap th{font-family:var(--serif);font-weight:500;color:var(--ink)}
+.summary .groups{grid-template-columns:repeat(2,minmax(0,1fr))}.summary .group{background:transparent;border-top:1px solid rgba(250,249,245,.28)}.summary .group h3{color:var(--ivory)}.summary .group p,.summary .group li{color:rgba(250,249,245,.8)}.summary h2{color:var(--ivory);font-size:66px}
+#nav{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:5px;z-index:8}#nav button{width:7px;height:7px;padding:0;border:0;border-radius:99px;background:#dbe1e7;cursor:pointer}#nav button.active{width:20px;background:var(--ink)}#progress{position:absolute;left:0;bottom:0;height:4px;background:var(--ink);transition:width .3s;z-index:9}
+#overview{position:absolute;inset:0;display:none;z-index:20;background:rgba(245,244,237,.985);padding:46px 58px;overflow:auto}#overview.open{display:block}.overview-head{display:flex;justify-content:space-between;margin-bottom:24px;font:18px var(--mono);color:var(--stone)}.overview-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.overview-card{min-height:115px;padding:17px;border:1px solid var(--sand-dark);background:var(--ivory);cursor:pointer}.overview-card.active{border:2px solid var(--ink)}.overview-card b{display:block;font:17px var(--mono);color:var(--ink);margin-bottom:9px}.overview-card span{font:500 20px/1.28 var(--serif)}
+@media print{html,body{overflow:visible;background:#fff}#viewport{position:static;display:block}#stage{width:auto;height:auto;transform:none!important;box-shadow:none;overflow:visible}#deck{display:block;height:auto;transform:none!important}.slide{width:1920px;height:1080px;page-break-after:always}#nav,#progress,#overview{display:none!important}}
+#fullscreen-btn{position:fixed;right:18px;bottom:18px;z-index:120;border:1px solid #D7D4C8;background:#FAF9F5;color:#1B365D;padding:10px 14px;font:700 15px/1 system-ui,sans-serif;cursor:pointer;box-shadow:0 3px 12px #11192333}#fullscreen-btn:hover,#fullscreen-btn:focus-visible{background:#1B365D;color:#FFFDF5;outline:2px solid #FFFDF5;outline-offset:2px}@media print{#fullscreen-btn{display:none!important}}</style></head><body><button id="fullscreen-btn" type="button" aria-label="전체화면 전환">전체화면 (F)</button><div id="viewport"><main id="stage"><div id="deck"><section class="slide dark cover density-low" data-slide-id="s01-outline" data-title="Outline" data-slide-kind="cover"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>1주차 · 01 / 12</span></div><div class="slide-inner cover-grid"><div class="cover-title"><p class="eyebrow">GENERATIVE AI · WEEK 01</p><h1>생성형 AI —<br>강의계획</h1></div><div class="cover-outline"><div class="groups grid-2"><article class="group"><h3>오늘 확인할 것</h3><ul>
+<li>강의계획서에서 학습 목표·15주 진행 순서·평가와 기말프로젝트를 확인한다.</li>
+<li>생성형 AI가 텍스트를 만드는 문제와 현재 해법을 쉬운 말로 정의한다.</li>
+<li>앞 문맥에서 다음 토큰 확률을 계산하고 선택을 반복하는 텍스트 생성 원리를 이해한다.</li>
+</ul></article><article class="group"><h3>오늘의 범위</h3><ul>
+<li>1주차는 학습 수식과 PyTorch 사용법보다 한 학기의 목적과 근본 질문에 집중한다.</li>
+<li>숫자 표현·손실·경사하강법·자동미분 실습은 2주차부터 시작한다.</li>
+</ul></article></div></div></div><div class="slide-foot"><span>생성형 AI — 강의계획</span><span class="counter">01 / 12</span></div></section>
+<section class="slide light two-column-compare density-low" data-slide-id="s02-section" data-title="강의계획서의 한 문장" data-slide-kind="two-column-compare"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>1주차 · 02 / 12</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">02 · TWO-COLUMN-COMPARE</p><h2>강의계획서의 한 문장</h2></header><div class="content text-layout"><div class="groups grid-2"><article class="group"><h3>교과목 개요</h3><ul>
+<li>텍스트를 숫자로 바꾸고 딥러닝 모델이 패턴을 학습해 새로운 텍스트를 만드는 원리를 배운다.</li>
+<li>작은 GPT 계열 언어모델의 입력 처리·학습·생성·미세조정을 코드 수준에서 연결한다.</li>
+</ul></article><article class="group"><h3>공식 문서</h3><ul>
+<li>세부 목표·평가·주별 계획은 공식 강의계획서를 기준으로 한다.</li>
+<li>주별 순서는 수업 진행 상황과 학습자의 준비도에 따라 일부 조정될 수 있다.</li>
+</ul></article></div></div></div><div class="slide-foot"><span>생성형 AI — 강의계획</span><span class="counter">02 / 12</span></div></section>
+<section class="slide light two-column-compare density-low" data-slide-id="s03-section" data-title="이 강의가 기르는 두 능력" data-slide-kind="two-column-compare"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>1주차 · 03 / 12</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">03 · TWO-COLUMN-COMPARE</p><h2>이 강의가 기르는 두 능력</h2></header><div class="content text-layout"><div class="groups grid-2"><article class="group"><h3>설명 능력</h3><ul>
+<li>토큰화·임베딩·Attention·GPT 구조가 텍스트를 처리하는 순서를 설명한다.</li>
+<li>손실·경사하강법·역전파가 모델의 숫자를 바꾸는 원리를 설명한다.</li>
+</ul></article><article class="group"><h3>구현과 평가 능력</h3><ul>
+<li>PyTorch로 작은 GPT 계열 모델과 학습 반복을 구현한다.</li>
+<li>손실·정확도·파라미터 수·생성 시간을 비교해 설계 선택을 평가한다.</li>
+<li>제한된 데이터와 계산량 안에서 모델 구조와 학습 전략을 개선한다.</li>
+</ul></article></div></div></div><div class="slide-foot"><span>생성형 AI — 강의계획</span><span class="counter">03 / 12</span></div></section>
+<section class="slide light table-to-cards density-medium" data-slide-id="s04-1-8" data-title="1–8주차 진행 계획" data-slide-kind="table-to-cards"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>1주차 · 04 / 12</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">04 · TABLE-TO-CARDS</p><h2>1–8주차 진행 계획</h2></header><div class="content table-layout"><div><div class="groups single"><article class="group"><h3>숫자 표현에서 GPT 구조까지</h3><ul>
+<li>전반부는 학습 원리에서 시작해 텍스트 표현·Attention·Transformer block을 차례로 조립한다.</li>
+<li>8주차 중간고사는 숫자화부터 GPT 구조까지의 개념과 계산 흐름을 평가한다.</li>
+</ul></article></div></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th align="right">주차</th>
+<th>주요 학습 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">1</td>
+<td>강의소개와 실습 환경 점검</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td>생성형 AI 기초와 학습 원리</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td>텍스트 표현과 신경망 기초</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td>LLM 개발 흐름과 데이터 구성</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td>Attention 기초</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td>Causal·Multi-head Attention</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td>Transformer block과 GPT 구조</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td>중간고사</td>
+</tr>
+</tbody>
+</table></div></div></div><div class="slide-foot"><span>생성형 AI — 강의계획</span><span class="counter">04 / 12</span></div></section>
+<section class="slide light table-to-cards density-medium" data-slide-id="s05-9-15" data-title="9–15주차 진행 계획" data-slide-kind="table-to-cards"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>1주차 · 05 / 12</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">05 · TABLE-TO-CARDS</p><h2>9–15주차 진행 계획</h2></header><div class="content table-layout"><div><div class="groups single"><article class="group"><h3>학습·생성·미세조정</h3><ul>
+<li>후반부는 언어모델 학습과 생성에서 시작해 목적별 미세조정과 프로젝트로 이어진다.</li>
+<li>15주차에는 제한된 조건에서 만든 모델 코드와 가중치를 숨은 평가 데이터로 검증한다.</li>
+</ul></article></div></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th align="right">주차</th>
+<th>주요 학습 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">9</td>
+<td>언어모델 학습과 손실 분석</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td>텍스트 생성과 모델 활용</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td>Classification fine-tuning 기초</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td>Classification fine-tuning 실행과 결과 분석</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td>Instruction fine-tuning 기초</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td>Instruction fine-tuning 응용과 프로젝트 준비</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td>기말프로젝트 제출 및 평가</td>
+</tr>
+</tbody>
+</table></div></div></div><div class="slide-foot"><span>생성형 AI — 강의계획</span><span class="counter">05 / 12</span></div></section>
+<section class="slide light two-column-compare density-low" data-slide-id="s06-section" data-title="수업 운영" data-slide-kind="two-column-compare"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>1주차 · 06 / 12</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">06 · TWO-COLUMN-COMPARE</p><h2>수업 운영</h2></header><div class="content text-layout"><div class="groups grid-2"><article class="group"><h3>이론과 실습</h3><ul>
+<li>이론은 손으로 계산할 수 있는 작은 예제에서 시작해 실제 텐서 연산으로 확장한다.</li>
+<li>실습은 원서·보강자료·PyTorch 코드·합성 언어 프로젝트를 연결한다.</li>
+<li>결과만 실행하지 않고 입력 모양·중간값·출력과 실패 원인을 설명한다.</li>
+</ul></article><article class="group"><h3>학습 기록</h3><ul>
+<li>강의자료와 실습자료의 공지 위치를 확인한다.</li>
+<li>질문·실패·비교 결과는 GitHub Discussion과 프로젝트 기록으로 남긴다.</li>
+</ul></article></div></div></div><div class="slide-foot"><span>생성형 AI — 강의계획</span><span class="counter">06 / 12</span></div></section>
+<section class="slide light table-to-cards density-medium" data-slide-id="s07-section" data-title="평가 구조" data-slide-kind="table-to-cards"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>1주차 · 07 / 12</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">07 · TABLE-TO-CARDS</p><h2>평가 구조</h2></header><div class="content table-layout equal-columns"><div><div class="groups single"><article class="group"><h3>비율</h3><ul>
+<li>중간고사는 35%, 기말프로젝트는 35%, 프로젝트 발표는 10%이다.</li>
+<li>출석은 5%, GitHub Discussion과 팀활동 참여는 15%이다.</li>
+</ul></article></div></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>평가 요소</th>
+<th align="right">비율</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>출석</td>
+<td align="right">5%</td>
+</tr>
+<tr>
+<td>중간고사</td>
+<td align="right">35%</td>
+</tr>
+<tr>
+<td>기말프로젝트</td>
+<td align="right">35%</td>
+</tr>
+<tr>
+<td>발표</td>
+<td align="right">10%</td>
+</tr>
+<tr>
+<td>Discussion·팀활동</td>
+<td align="right">15%</td>
+</tr>
+</tbody>
+</table></div></div></div><div class="slide-foot"><span>생성형 AI — 강의계획</span><span class="counter">07 / 12</span></div></section>
+<section class="slide light two-column-compare density-low" data-slide-id="s08-section" data-title="기말프로젝트" data-slide-kind="two-column-compare"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>1주차 · 08 / 12</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">08 · TWO-COLUMN-COMPARE</p><h2>기말프로젝트</h2></header><div class="content text-layout"><div class="groups grid-2"><article class="group"><h3>데이터와 설계</h3><ul>
+<li>제공된 합성 언어 데이터로 모델을 학습한다.</li>
+<li>모델 구조·학습 알고리즘·학습률·규제 방법을 직접 설계한다.</li>
+<li>제출한 코드와 모델 파일은 교수자 환경에서 다시 실행된다.</li>
+</ul></article><article class="group"><h3>외부 자료 제한</h3><ul>
+<li>외부 자연어 말뭉치·외부 사전학습 가중치·외부 API 출력 데이터를 학습에 사용할 수 없다.</li>
+<li>숨은 평가 데이터에 맞춘 수동 규칙이나 데이터 누출을 사용할 수 없다.</li>
+<li>프로젝트 세부 제출 형식과 평가 코드는 별도 공지를 따른다.</li>
+</ul></article></div></div></div><div class="slide-foot"><span>생성형 AI — 강의계획</span><span class="counter">08 / 12</span></div></section>
+<section class="slide light two-column-compare density-low" data-slide-id="s09-ai" data-title="생성형 AI와 텍스트 생성" data-slide-kind="two-column-compare"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>1주차 · 09 / 12</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">09 · TWO-COLUMN-COMPARE</p><h2>생성형 AI와 텍스트 생성</h2></header><div class="content text-layout"><div class="groups grid-2"><article class="group"><h3>텍스트 생성 문제</h3><ul>
+<li>텍스트 생성은 앞에 주어진 문맥에 이어질 글자나 단어 조각을 반복해서 선택하는 일이다.</li>
+<li>가능한 문장 수가 매우 많아 사람이 모든 입력과 답을 미리 작성할 수 없다.</li>
+</ul></article><article class="group"><h3>생성형 AI의 역할</h3><ul>
+<li>생성형 AI는 많은 예제에서 다음에 올 표현의 확률을 학습하고 새 문맥에서 후보를 선택한다.</li>
+<li>자연스러운 출력은 사실성·안전성·정확성을 자동으로 보장하지 않으므로 별도 검증이 필요하다.</li>
+</ul></article></div></div></div><div class="slide-foot"><span>생성형 AI — 강의계획</span><span class="counter">09 / 12</span></div></section>
+<section class="slide light two-column-compare density-low" data-slide-id="s10-ai" data-title="문제와 현재 해법 — 왜 텍스트 생성에 생성형 AI를 사용하는가?" data-slide-kind="two-column-compare"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>1주차 · 10 / 12</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">10 · TWO-COLUMN-COMPARE</p><h2>문제와 현재 해법 — 왜 텍스트 생성에 생성형 AI를 사용하는가?</h2></header><div class="content text-layout"><div class="groups grid-2"><article class="group"><h3>중심 문제와 현재 해법</h3><ul>
+<li>중심 문제는 사람이 모든 문장 규칙을 작성하지 않고 새 문맥에 이어지는 텍스트를 만드는 것이다.</li>
+<li>현재 해법은 Transformer 기반 생성형 AI가 앞 문맥에서 다음 토큰 확률을 학습하고 선택을 반복하는 것이다.</li>
+</ul></article><article class="group"><h3>효과와 연결 질문</h3><ul>
+<li>같은 모델은 입력 문맥과 선택 결과에 따라 훈련 문장을 그대로 복사하지 않은 새로운 문장을 만들 수 있다.</li>
+<li>그렇다면 왜 텍스트 생성에는 미리 작성한 규칙보다 Transformer 기반 생성형 AI를 사용하는가?</li>
+</ul></article></div></div></div><div class="slide-foot"><span>생성형 AI — 강의계획</span><span class="counter">10 / 12</span></div></section>
+<section class="slide light two-column-compare density-low" data-slide-id="s11-2" data-title="2주차로 이어지는 출발점" data-slide-kind="two-column-compare"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>1주차 · 11 / 12</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">11 · TWO-COLUMN-COMPARE</p><h2>2주차로 이어지는 출발점</h2></header><div class="content text-layout"><div class="groups grid-2"><article class="group"><h3>다음 내용</h3><ul>
+<li>데이터가 모델이 계산할 수 있는 수치·벡터·행렬·텐서로 바뀌는 과정을 배운다.</li>
+<li>예측과 정답의 차이를 손실로 계산하고 기울기로 모델의 숫자를 고친다.</li>
+<li>PyTorch 텐서와 자동미분으로 작은 학습 반복을 직접 실행한다.</li>
+</ul></article><article class="group"><h3>준비 사항</h3><ul>
+<li>Python 함수·반복문·리스트와 행렬의 행·열 개념을 복습한다.</li>
+<li>수업에서 사용할 Python 환경과 PyTorch 실행 장치를 확인한다.</li>
+</ul></article></div></div></div><div class="slide-foot"><span>생성형 AI — 강의계획</span><span class="counter">11 / 12</span></div></section>
+<section class="slide dark summary density-low" data-slide-id="s12-summary" data-title="Summary" data-slide-kind="summary"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>1주차 · 12 / 12</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">12 · SUMMARY</p><h2>Summary</h2></header><div class="content text-layout"><div class="groups grid-2"><article class="group"><h3>강의 진행</h3><ul>
+<li>전반부는 학습 원리와 GPT 구조, 후반부는 언어모델 학습·생성·미세조정으로 진행한다.</li>
+<li>평가는 중간고사와 제한 조건이 있는 기말프로젝트·발표·참여 기록으로 구성한다.</li>
+<li>프로젝트는 제공된 합성 언어 데이터와 직접 설계한 작은 모델만 사용한다.</li>
+</ul></article><article class="group"><h3>왜 생성형 AI인가</h3><ul>
+<li>텍스트 생성은 앞 문맥에 이어질 글자나 단어 조각을 반복해서 선택하는 일이다.</li>
+<li>Transformer 기반 생성형 AI는 앞 문맥에서 다음 토큰의 확률을 계산하고 선택을 반복한다.</li>
+<li>자연스러운 출력도 사실성·안전성·정확성을 자동으로 보장하지 않으므로 별도 검증이 필요하다.</li>
+</ul></article></div></div></div><div class="slide-foot"><span>생성형 AI — 강의계획</span><span class="counter">12 / 12</span></div></section></div><nav id="nav" aria-label="슬라이드 이동"></nav><div id="progress"></div><div id="overview"></div></main></div><script>
+(() => {
+  const stage=document.getElementById('stage'), deck=document.getElementById('deck'), slides=[...document.querySelectorAll('.slide')];
+  const nav=document.getElementById('nav'), progress=document.getElementById('progress'), overview=document.getElementById('overview');
+  const key='kami:' + location.pathname; let index=Math.max(0,Math.min(slides.length-1,Number(localStorage.getItem(key)||0)));
+  slides.forEach((slide,i)=>{const b=document.createElement('button');b.setAttribute('aria-label',`Slide ${i+1}`);b.onclick=()=>go(i);nav.appendChild(b)});
+  function scale(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`scale(${s})`}
+  function apply(){deck.style.transform=`translateX(${-index*1920}px)`;slides.forEach((s,i)=>s.classList.toggle('active',i===index));[...nav.children].forEach((b,i)=>b.classList.toggle('active',i===index));progress.style.width=`${((index+1)/slides.length)*100}%`;localStorage.setItem(key,index)}
+  function go(n){index=Math.max(0,Math.min(slides.length-1,n));apply()}
+  function toggleOverview(){overview.classList.toggle('open');if(!overview.classList.contains('open'))return;overview.innerHTML=`<div class="overview-head"><b>Slide overview · ESC</b><span>${String(index+1).padStart(2,'0')} / ${String(slides.length).padStart(2,'0')}</span></div><div class="overview-grid"></div>`;const grid=overview.querySelector('.overview-grid');slides.forEach((s,i)=>{const c=document.createElement('button');c.className='overview-card'+(i===index?' active':'');c.innerHTML=`<b>${String(i+1).padStart(2,'0')}</b><span>${s.dataset.title}</span>`;c.onclick=()=>{overview.classList.remove('open');go(i)};grid.appendChild(c)})}
+  async function toggleFullscreen(){if(!document.fullscreenElement){await document.documentElement.requestFullscreen()}else{await document.exitFullscreen()}}
+  document.getElementById('fullscreen-btn').addEventListener('click',()=>toggleFullscreen());
+  addEventListener('resize',scale);addEventListener('keydown',e=>{if(e.key.toLowerCase()==='f'){e.preventDefault();toggleFullscreen();return}if(e.key==='Escape'){e.preventDefault();toggleOverview();return}if(overview.classList.contains('open'))return;if(['ArrowRight','PageDown',' ','ArrowDown'].includes(e.key)){e.preventDefault();go(index+1)}else if(['ArrowLeft','PageUp','ArrowUp'].includes(e.key)){e.preventDefault();go(index-1)}else if(e.key==='Home'){go(0)}else if(e.key==='End'){go(slides.length-1)}});
+  let wheel=0,timer;addEventListener('wheel',e=>{if(overview.classList.contains('open'))return;wheel+=e.deltaY+e.deltaX;if(Math.abs(wheel)>70){go(index+(wheel>0?1:-1));wheel=0}clearTimeout(timer);timer=setTimeout(()=>wheel=0,160)},{passive:true});
+  let tx=0,ty=0;addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))go(index+(dx<0?1:-1))},{passive:true});
+  scale();apply();
+})();
+</script></body></html>
