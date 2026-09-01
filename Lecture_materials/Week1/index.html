@@ -227,4 +227,4 @@ h1,h2,h3,p{margin:0}h1,h2,h3{font-family:var(--serif);font-weight:500}h1{font-si
   let tx=0,ty=0;addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))go(index+(dx<0?1:-1))},{passive:true});
   scale();apply();
 })();
-</script></body></html>
+</script><script src="../../lecture-nav.js"></script></body></html>
