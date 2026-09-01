@@ -5,10 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>생성형 AI 강의자료</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231b365d'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-size='20' fill='%23faf9f5'%3E生%3C/text%3E%3C/svg%3E">
-  <meta http-equiv="refresh" content="0; url=Lecture_materials/Week1/">
-  <script>location.replace('Lecture_materials/Week1/');</script>
+  <style>
+    :root{--ink:#1b365d;--paper:#f5f4ed;--panel:#faf9f5;--line:#d8d5c7;--text:#202a36;--muted:#68727c}
+    *{box-sizing:border-box}html,body{min-height:100%;margin:0}body{display:grid;place-items:center;background:#111b29;color:var(--text);font-family:Pretendard,"Noto Sans KR",system-ui,sans-serif}
+    main{width:min(920px,calc(100% - 40px));background:var(--paper);border:1px solid var(--line);padding:64px}
+    .mark{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--ink);border-radius:50%;color:var(--ink);font:24px serif}
+    .eyebrow{margin:30px 0 12px;color:var(--ink);font-size:15px;font-weight:800;letter-spacing:.16em}
+    h1{margin:0;font:500 clamp(42px,7vw,72px)/1.15 "Noto Serif KR","Nanum Myeongjo",serif;letter-spacing:-.04em;color:var(--ink)}
+    p{margin:22px 0 42px;color:var(--muted);font-size:21px;line-height:1.6}
+    .picker{display:grid;grid-template-columns:1fr auto;gap:12px;padding-top:28px;border-top:2px solid var(--ink)}
+    label{grid-column:1/-1;color:var(--ink);font-weight:800}
+    select,button{min-height:54px;border:1px solid var(--line);background:var(--panel);color:var(--text);padding:0 18px;font:700 18px system-ui,sans-serif}
+    button{border-color:var(--ink);background:var(--ink);color:white;cursor:pointer}button:hover,button:focus-visible{background:#2d507a}
+    .note{margin:18px 0 0;font-size:15px;color:var(--muted)}
+    @media(max-width:640px){main{padding:36px 24px}.picker{grid-template-columns:1fr}.picker button{width:100%}}
+  </style>
 </head>
 <body>
-  <p><a href="Lecture_materials/Week1/">1주차 강의자료 열기</a></p>
+  <main>
+    <div class="mark">生</div>
+    <div class="eyebrow">GENERATIVE AI · LECTURE MATERIALS</div>
+    <h1>생성형 AI 강의자료</h1>
+    <p>강의할 주차를 선택하면 전체화면 발표 덱이 열립니다.</p>
+    <div class="picker">
+      <label for="week-selector">주차 선택</label>
+      <select id="week-selector">
+        <option value="Lecture_materials/Week1/">1주차 · 강의계획</option>
+      </select>
+      <button id="open-week" type="button">강의 시작</button>
+    </div>
+    <div class="note">현재는 1주차만 배포되어 있습니다.</div>
+  </main>
+  <script>
+    const selector=document.getElementById('week-selector');
+    document.getElementById('open-week').addEventListener('click',()=>location.href=selector.value);
+    selector.addEventListener('keydown',event=>{if(event.key==='Enter')location.href=selector.value});
+  </script>
 </body>
 </html>
