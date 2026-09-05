@@ -3,8 +3,18 @@
   "audience": "생성형 AI 과목 2주차 수강생",
   "style_preset": "Kami Academic / kami-paper",
   "source": "../02주차_배포용.md",
-  "mapping_rule": "배포용 MD의 각 ##를 순서대로 한 장에 대응하되, 사용자 피드백으로 PyTorch 계산 확인 장표는 HTML 덱에서 제외한다.",
-  "slide_count": 27,
+  "mapping_rule": "배포용 MD의 각 ##를 순서대로 같은 이름의 HTML 및 plan 조각 한 개에 대응한다.",
+  "slide_count": 32,
+  "revision_notes": [
+    "2026-08-29: 02주차 배포용 MD 28개 섹션을 28장으로 고정하고 스토리 장표는 제외했다.",
+    "2026-08-30: HTML 피드백에 따라 2쪽 비교 카드의 상단선을 정렬하고, 10쪽 계산 경로를 수식으로 렌더링하며, PyTorch 계산 확인 장표를 제외해 27장으로 조정했다.",
+    "2026-08-30: 2쪽 오른쪽 설명 카드를 텍스트·이미지→숫자 배열→모델 흐름과 정보 보존 여부를 나타내는 인라인 SVG 도식으로 교체했다.",
+    "2026-08-30: 2쪽 도식을 텍스트→토큰 번호와 이미지→픽셀 행렬 예제로 단순화하고, 3쪽의 문자 기반 과정도를 정렬된 다섯 단계 SVG와 파라미터 갱신 되먹임 선으로 교체했다.",
+    "2026-09-04: 9쪽의 근사 기울기 수식 아래에 L(w)=(w-3)^2인 경우를 숫자로 대입해 기울기의 부호와 손실 감소 방향을 확인하는 예제를 추가했다.",
+    "2026-09-04: 통합 배포용 MD를 기준본으로 유지하고 각 ##를 같은 이름의 HTML 및 plan 조각에 1:1 대응시키는 병렬 수정 구조로 전환했다.",
+    "2026-09-04: 기존 13장의 손계산 데이터와 초기값을 10장으로 이동하고, 같은 세 학생 예제의 예측·손실·연쇄법칙·전체 기울기·두 차례 갱신·수렴을 10~23장에 걸쳐 전개했다.",
+    "2026-09-05: 14장의 각 원래 식과 편미분 결과를 직관적으로 대응시키고, 15~18장을 A의 정확한 기울기→B·C의 기울기→세 샘플 평균→첫 이동량으로 재구성했다. 19~23장은 반올림 전 분수값을 유지해 예측·손실·두 번째 기울기·수렴값의 수치 일관성을 다시 검증했다."
+  ],
   "slides": [
     {
       "id": "s01-outline",
@@ -111,133 +121,198 @@
       "density": "low"
     },
     {
-      "id": "s09-기울기는-손실의-변화-방향을-알려-준다",
-      "title": "기울기는 손실의 변화 방향을 알려 준다",
+      "id": "s09-gradient-direction",
+      "title": "손실의 변화 방향을 알려주는 기울기",
       "type": "formula-walkthrough",
-      "teaching_goal": "기울기는 손실의 변화 방향을 알려 준다의 핵심 개념과 확인 기준을 설명한다.",
-      "core_message": "L(w)는 가중치 w가 정해졌을 때의 손실이다.",
+      "teaching_goal": "기울기의 부호로 손실이 감소하는 방향을 판단한다.",
+      "core_message": "근사 기울기 -3.9는 w를 키울 때 손실이 감소함을 뜻한다.",
       "source_refs": [
-        "../02주차_배포용.md:line-116"
+        "../02주차_배포용.md#손실의-변화-방향을-알려주는-기울기"
       ],
       "layout": "formula-and-explanation",
-      "visual": "equation with explanation",
-      "density": "low"
-    },
-    {
-      "id": "s10-연쇄법칙이-필요한-이유",
-      "title": "연쇄법칙이 필요한 이유",
-      "type": "process-flow",
-      "teaching_goal": "연쇄법칙이 필요한 이유의 핵심 개념과 확인 기준을 설명한다.",
-      "core_message": "한 샘플에서 예측은 \\hat{y}_i=wx_i+b이고 오차는 e_i=\\hat{y}_i-y_i이다.",
-      "source_refs": [
-        "../02주차_배포용.md:line-132"
-      ],
-      "layout": "process-and-code",
-      "visual": "process diagram",
-      "density": "low"
-    },
-    {
-      "id": "s11-연쇄법칙으로-기울기-연결",
-      "title": "연쇄법칙으로 기울기 연결",
-      "type": "formula-walkthrough",
-      "teaching_goal": "연쇄법칙으로 기울기 연결의 핵심 개념과 확인 기준을 설명한다.",
-      "core_message": "\\partial\\ell_i/\\partial e_i=2e_i, \\partial e_i/\\partial\\hat{y}_i=1이다.",
-      "source_refs": [
-        "../02주차_배포용.md:line-147"
-      ],
-      "layout": "formula-and-explanation",
-      "visual": "equation with explanation",
-      "density": "low"
-    },
-    {
-      "id": "s12-경사하강법",
-      "title": "경사하강법",
-      "type": "formula-walkthrough",
-      "teaching_goal": "경사하강법의 핵심 개념과 확인 기준을 설명한다.",
-      "core_message": "학습률 \\eta는 한 번의 갱신에서 기울기를 적용할 크기이다.",
-      "source_refs": [
-        "../02주차_배포용.md:line-165"
-      ],
-      "layout": "formula-and-explanation",
-      "visual": "equation with explanation",
-      "density": "low"
-    },
-    {
-      "id": "s13-손계산-데이터와-초기값",
-      "title": "손계산 데이터와 초기값",
-      "type": "table-to-cards",
-      "teaching_goal": "손계산 데이터와 초기값의 핵심 개념과 확인 기준을 설명한다.",
-      "core_message": "데이터의 관계는 y=2x이고 목표 파라미터는 w=2, b=0이다.",
-      "source_refs": [
-        "../02주차_배포용.md:line-182"
-      ],
-      "layout": "table-and-context",
-      "visual": "structured comparison table",
+      "visual": "근사 기울기 식과 숫자 대입",
       "density": "medium"
     },
     {
-      "id": "s14-첫-예측과-손실",
-      "title": "첫 예측과 손실",
-      "type": "formula-walkthrough",
-      "teaching_goal": "첫 예측과 손실의 핵심 개념과 확인 기준을 설명한다.",
-      "core_message": "초기 파라미터가 모두 0이므로 세 예측은 모두 0이다.",
+      "id": "s10-handcalc-data",
+      "title": "손계산 데이터와 초기값",
+      "type": "table",
+      "teaching_goal": "손계산에 사용할 데이터와 초기 파라미터를 고정한다.",
+      "core_message": "세 학생과 w=0, b=0, η=0.1을 이후 모든 계산에서 유지한다.",
       "source_refs": [
-        "../02주차_배포용.md:line-197"
-      ],
-      "layout": "formula-and-explanation",
-      "visual": "equation with explanation",
-      "density": "low"
-    },
-    {
-      "id": "s15-첫-기울기",
-      "title": "첫 기울기",
-      "type": "formula-walkthrough",
-      "teaching_goal": "첫 기울기의 핵심 개념과 확인 기준을 설명한다.",
-      "core_message": "두 기울기가 음수이므로 이번 갱신에서는 w와 b가 모두 증가한다.",
-      "source_refs": [
-        "../02주차_배포용.md:line-213"
-      ],
-      "layout": "formula-and-explanation",
-      "visual": "equation with explanation",
-      "density": "low"
-    },
-    {
-      "id": "s16-첫-파라미터-갱신",
-      "title": "첫 파라미터 갱신",
-      "type": "formula-walkthrough",
-      "teaching_goal": "첫 파라미터 갱신의 핵심 개념과 확인 기준을 설명한다.",
-      "core_message": "가중치와 편향이 증가하면서 예측 직선이 세 정답 쪽으로 이동한다.",
-      "source_refs": [
-        "../02주차_배포용.md:line-232"
-      ],
-      "layout": "formula-and-explanation",
-      "visual": "equation with explanation",
-      "density": "low"
-    },
-    {
-      "id": "s17-두-번째-예측과-손실",
-      "title": "두 번째 예측과 손실",
-      "type": "formula-walkthrough",
-      "teaching_goal": "두 번째 예측과 손실의 핵심 개념과 확인 기준을 설명한다.",
-      "core_message": "x=1,2,3에 대한 새 예측은 약 2.667, 4.533, 6.401이다.",
-      "source_refs": [
-        "../02주차_배포용.md:line-249"
-      ],
-      "layout": "formula-and-explanation",
-      "visual": "equation with explanation",
-      "density": "low"
-    },
-    {
-      "id": "s18-반복하면-파라미터가-수렴한다",
-      "title": "반복하면 파라미터가 수렴한다",
-      "type": "table-to-cards",
-      "teaching_goal": "반복하면 파라미터가 수렴한다의 핵심 개념과 확인 기준을 설명한다.",
-      "core_message": "반복할수록 w는 2에, b는 0에 가까워진다.",
-      "source_refs": [
-        "../02주차_배포용.md:line-264"
+        "../02주차_배포용.md#손계산-데이터와-초기값"
       ],
       "layout": "table-and-context",
-      "visual": "structured comparison table",
+      "visual": "데이터 표와 초기값",
+      "density": "low"
+    },
+    {
+      "id": "s11-first-prediction",
+      "title": "초기 파라미터의 첫 예측",
+      "type": "formula-walkthrough",
+      "teaching_goal": "세 입력의 첫 예측과 오차를 직접 계산한다.",
+      "core_message": "초기 예측은 모두 0이고 오차는 -2, -4, -6이다.",
+      "source_refs": [
+        "../02주차_배포용.md#초기-파라미터의-첫-예측"
+      ],
+      "layout": "formula-and-explanation",
+      "visual": "학생별 예측식",
+      "density": "medium"
+    },
+    {
+      "id": "s12-first-loss",
+      "title": "세 예측으로 계산한 첫 손실",
+      "type": "formula-walkthrough",
+      "teaching_goal": "세 오차에서 평균제곱오차를 계산한다.",
+      "core_message": "초기 손실은 56/3, 약 18.67이다.",
+      "source_refs": [
+        "../02주차_배포용.md#세-예측으로-계산한-첫-손실"
+      ],
+      "layout": "formula-and-explanation",
+      "visual": "손실 전개식",
+      "density": "medium"
+    },
+    {
+      "id": "s13-sample-path",
+      "title": "한 샘플의 계산 경로",
+      "type": "formula-walkthrough",
+      "teaching_goal": "w에서 샘플 손실까지의 중간 계산을 구분한다.",
+      "core_message": "w는 예측, 오차를 거쳐 손실에 영향을 준다.",
+      "source_refs": [
+        "../02주차_배포용.md#한-샘플의-계산-경로"
+      ],
+      "layout": "formula-and-explanation",
+      "visual": "계산 경로와 세 식",
+      "density": "medium"
+    },
+    {
+      "id": "s14-chain-rule",
+      "title": "계산 경로를 잇는 연쇄법칙",
+      "type": "formula-walkthrough",
+      "teaching_goal": "각 원래 식에서 편미분 결과가 나오는 이유를 직관적으로 설명하고 연쇄법칙으로 연결한다.",
+      "core_message": "전체 변화율은 원래 식에서 나온 세 국소 변화율의 곱이다.",
+      "source_refs": [
+        "../02주차_배포용.md#계산-경로를-잇는-연쇄법칙"
+      ],
+      "layout": "formula-and-explanation",
+      "visual": "원래 식과 편미분 결과의 일대일 대응",
+      "density": "high"
+    },
+    {
+      "id": "s15-sample-gradient",
+      "title": "학생 A에서 계산한 정확한 샘플 기울기",
+      "type": "formula-walkthrough",
+      "teaching_goal": "학생 A의 실제 값으로 연쇄법칙의 세 편미분과 최종 기울기를 끝까지 계산한다.",
+      "core_message": "학생 A의 가중치 기울기와 편향 기울기는 모두 정확히 -4이다.",
+      "source_refs": [
+        "../02주차_배포용.md#학생-A에서-계산한-정확한-샘플-기울기"
+      ],
+      "layout": "formula-and-explanation",
+      "visual": "A의 입력·오차·국소 변화율·최종 기울기",
+      "density": "medium"
+    },
+    {
+      "id": "s16-dataset-gradient",
+      "title": "나머지 두 샘플의 기울기",
+      "type": "formula-walkthrough",
+      "teaching_goal": "같은 연쇄법칙을 학생 B와 C의 실제 값에 적용한다.",
+      "core_message": "B의 기울기는 (-16,-8), C의 기울기는 (-36,-12)이다.",
+      "source_refs": [
+        "../02주차_배포용.md#나머지-두-샘플의-기울기"
+      ],
+      "layout": "two-column-compare",
+      "visual": "B와 C의 가중치·편향 기울기 비교",
+      "density": "medium"
+    },
+    {
+      "id": "s17-first-weight-gradient",
+      "title": "세 샘플 기울기의 평균",
+      "type": "formula-walkthrough",
+      "teaching_goal": "A·B·C의 샘플 기울기를 평균해 전체 가중치와 편향 기울기를 계산한다.",
+      "core_message": "전체 가중치 기울기는 -56/3, 편향 기울기는 -8이다.",
+      "source_refs": [
+        "../02주차_배포용.md#세-샘플-기울기의-평균"
+      ],
+      "layout": "formula-and-explanation",
+      "visual": "세 샘플 결과의 두 평균",
+      "density": "medium"
+    },
+    {
+      "id": "s18-first-bias-gradient",
+      "title": "기울기에서 계산한 첫 이동량",
+      "type": "formula-walkthrough",
+      "teaching_goal": "기울기의 부호와 학습률로 실제 파라미터 이동량을 계산한다.",
+      "core_message": "첫 이동량은 Δw=28/15, Δb=4/5이며 둘 다 양수이다.",
+      "source_refs": [
+        "../02주차_배포용.md#기울기에서-계산한-첫-이동량"
+      ],
+      "layout": "formula-and-explanation",
+      "visual": "기울기에서 이동량으로의 변환",
+      "density": "medium"
+    },
+    {
+      "id": "s19-first-update",
+      "title": "경사하강법의 첫 파라미터 갱신",
+      "type": "formula-walkthrough",
+      "teaching_goal": "앞 장에서 계산한 이동량을 같은 초기 파라미터에 더한다.",
+      "core_message": "첫 갱신 뒤 정확한 값은 w=28/15, b=4/5이다.",
+      "source_refs": [
+        "../02주차_배포용.md#경사하강법의-첫-파라미터-갱신"
+      ],
+      "layout": "formula-and-explanation",
+      "visual": "이동량을 더한 두 파라미터의 정확한 값",
+      "density": "medium"
+    },
+    {
+      "id": "s20-second-prediction-loss",
+      "title": "갱신된 파라미터의 두 번째 예측과 손실",
+      "type": "formula-walkthrough",
+      "teaching_goal": "첫 갱신의 정확한 분수값으로 같은 세 학생의 예측과 손실을 다시 계산한다.",
+      "core_message": "두 번째 손실은 정확히 8/27, 약 0.296으로 감소한다.",
+      "source_refs": [
+        "../02주차_배포용.md#갱신된-파라미터의-두-번째-예측과-손실"
+      ],
+      "layout": "formula-and-explanation",
+      "visual": "분수값을 유지한 세 예측과 손실 재계산",
+      "density": "high"
+    },
+    {
+      "id": "s21-second-gradient",
+      "title": "두 번째 기울기의 손계산",
+      "type": "formula-walkthrough",
+      "teaching_goal": "같은 세 학생의 정확한 두 번째 오차로 두 기울기를 다시 계산한다.",
+      "core_message": "두 번째 기울기는 정확히 w에서 88/45, b에서 16/15이다.",
+      "source_refs": [
+        "../02주차_배포용.md#두-번째-기울기의-손계산"
+      ],
+      "layout": "formula-and-explanation",
+      "visual": "분수 오차를 사용한 두 번째 기울기 산술 전개",
+      "density": "high"
+    },
+    {
+      "id": "s22-second-update",
+      "title": "두 번째 갱신과 재검증",
+      "type": "formula-walkthrough",
+      "teaching_goal": "두 번째 갱신의 정확한 파라미터로 같은 데이터의 예측과 손실을 검증한다.",
+      "core_message": "w=376/225, b=52/75에서 손실은 11144/151875, 약 0.0734이다.",
+      "source_refs": [
+        "../02주차_배포용.md#두-번째-갱신과-재검증"
+      ],
+      "layout": "formula-and-explanation",
+      "visual": "정확한 갱신식·새 예측·새 손실",
+      "density": "high"
+    },
+    {
+      "id": "s23-convergence",
+      "title": "반복 계산에서 나타나는 파라미터 수렴",
+      "type": "table",
+      "teaching_goal": "같은 데이터와 계산을 반복한 파라미터와 손실의 수렴을 해석한다.",
+      "core_message": "반복할수록 w는 2, b는 0, 손실은 0에 가까워지며 반복 2의 값은 앞 장과 일치한다.",
+      "source_refs": [
+        "../02주차_배포용.md#반복-계산에서-나타나는-파라미터-수렴"
+      ],
+      "layout": "table-and-context",
+      "visual": "앞 장과 일치하는 반복별 수렴 표",
       "density": "medium"
     },
     {
@@ -357,11 +432,5 @@
       "visual": "typographic concept panels",
       "density": "medium"
     }
-  ],
-  "revision_notes": [
-    "2026-08-29: 02주차 배포용 MD 28개 섹션을 28장으로 고정하고 스토리 장표는 제외했다.",
-    "2026-08-30: HTML 피드백에 따라 2쪽 비교 카드의 상단선을 정렬하고, 10쪽 계산 경로를 수식으로 렌더링하며, PyTorch 계산 확인 장표를 제외해 27장으로 조정했다.",
-    "2026-08-30: 2쪽 오른쪽 설명 카드를 텍스트·이미지→숫자 배열→모델 흐름과 정보 보존 여부를 나타내는 인라인 SVG 도식으로 교체했다.",
-    "2026-08-30: 2쪽 도식을 텍스트→토큰 번호와 이미지→픽셀 행렬 예제로 단순화하고, 3쪽의 문자 기반 과정도를 정렬된 다섯 단계 SVG와 파라미터 갱신 되먹임 선으로 교체했다."
   ]
 }
