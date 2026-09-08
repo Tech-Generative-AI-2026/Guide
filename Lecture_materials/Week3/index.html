@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>생성형 AI — 텍스트 표현과 신경망 학습</title>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]},svg:{fontCache:'global'}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root{--ink:#1B365D;--paper:#F5F4ED;--panel:#FAF9F5;--text:#202A36;--muted:#68727C;--line:#D7D4C8;--ivory:#FFFDF5;--serif:"Noto Serif KR","Nanum Myeongjo",serif;--sans:Pretendard,"Noto Sans KR",system-ui,sans-serif;--mono:"JetBrains Mono","D2Coding",monospace}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#111923;color:var(--text);font-family:var(--sans)}button{font:inherit}.viewport{position:fixed;inset:0;display:grid;place-items:center}.stage{width:1920px;height:1080px;transform-origin:center center;overflow:hidden}.deck{display:flex;width:max-content;height:1080px}.slide{position:relative;width:1920px;height:1080px;flex:none;overflow:hidden}.slide.light{background:var(--paper)}.slide.dark{background:var(--ink);color:var(--ivory)}.slide.light:after{content:"";position:absolute;inset:22px;border:1px solid var(--line);pointer-events:none}.chrome,.slide-foot{position:absolute;left:78px;right:78px;z-index:2;display:flex;align-items:center;justify-content:space-between;font-size:21px;letter-spacing:.02em}.chrome{top:42px}.slide-foot{bottom:38px;color:var(--muted)}.dark .slide-foot,.dark .chrome{color:#E5E2D8}.brand{display:flex;gap:14px;align-items:center}.mark{width:34px;height:34px;border:1px solid currentColor;display:grid;place-items:center;font-family:var(--serif);font-size:19px}.counter,.chrome>span:last-child{font-variant-numeric:tabular-nums}.slide-inner{position:absolute;inset:100px 92px 88px;display:grid;grid-template-rows:auto 1fr;gap:34px}.title-block{border-bottom:2px solid var(--ink);padding-bottom:22px}.dark .title-block{border-color:var(--ivory)}.section-num,.eyebrow{margin:0 0 12px;font:700 19px/1 var(--sans);letter-spacing:.13em;color:var(--ink)}.dark .section-num,.dark .eyebrow{color:#E5E2D8}.title-block h2{margin:0;font:500 64px/1.17 var(--serif);letter-spacing:-.035em}.body{min-height:0;display:grid;align-content:center}.body.with-extra{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:34px;align-items:stretch}.groups{display:grid;gap:28px;min-height:0}.groups.grid-2{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}.body.with-extra .groups.grid-2{grid-template-columns:1fr}.group{background:var(--panel);border:1px solid var(--line);border-top:6px solid var(--ink);padding:30px 34px;min-width:0;display:flex;flex-direction:column;justify-content:center}.dark .group{background:#26456E;border-color:#627998;border-top-color:var(--ivory)}.group h3{margin:0 0 20px;font:500 34px/1.25 var(--serif);color:var(--ink)}.dark .group h3{color:var(--ivory)}ul{margin:0;padding-left:1.05em;display:grid;gap:16px}li{padding-left:.24em;font-size:29px;line-height:1.45;letter-spacing:-.018em}li::marker{color:var(--ink)}.dark li::marker{color:var(--ivory)}code{font-family:var(--mono);font-size:.88em;color:var(--ink);background:#E9E7DE;padding:.07em .26em;border-radius:3px}.dark code{color:var(--ivory);background:#36547B}.extras{min-width:0;display:grid;gap:18px;align-content:center}.extras pre{margin:0;padding:28px 32px;background:#17263A;color:#F7F4EA;border:1px solid #314966;border-left:7px solid var(--ink);font:500 24px/1.48 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}.extras pre code{background:none;color:inherit;padding:0;font-size:inherit}.formula-card{display:grid;place-items:center;min-height:190px;padding:30px;background:var(--panel);border:1px solid var(--line);border-left:7px solid var(--ink);font-size:30px;overflow:hidden}.table-wrap{background:var(--panel);border:1px solid var(--line);padding:12px 18px;display:grid;align-content:center}table{width:100%;border-collapse:collapse;font-size:25px;line-height:1.28}th,td{padding:16px 18px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}th{font-size:23px;color:var(--ink);font-weight:800}tr:last-child td{border-bottom:0}td code,th code{white-space:nowrap}.cover-inner{position:absolute;inset:130px 120px 105px;display:grid;grid-template-columns:1.04fr .96fr;grid-template-rows:auto auto 1fr;column-gap:86px;align-content:center}.cover-inner .eyebrow{grid-column:1}.cover-inner h1{grid-column:1;margin:10px 0 30px;font:500 74px/1.18 var(--serif);letter-spacing:-.045em}.cover-lead{grid-column:1;margin:0;max-width:860px;font-size:30px;line-height:1.55;color:#E5E2D8}.cover-map{grid-column:2;grid-row:1/4;display:grid;gap:24px;align-content:center}.cover-map .group{min-height:260px}.cover-map li{font-size:26px}.kind-summary .body{align-content:center}.kind-summary .group{min-height:315px}.kind-summary .title-block h2{font-size:70px}.kind-table .body.with-extra{grid-template-columns:.72fr 1.28fr}.kind-formula .body.with-extra{grid-template-columns:.82fr 1.18fr}.kind-code .body.with-extra,.kind-process .body.with-extra{grid-template-columns:.86fr 1.14fr}#nav{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:7px;z-index:20;max-width:68vw;flex-wrap:wrap;justify-content:center}#nav button{width:9px;height:9px;border:0;border-radius:50%;background:#89929C;padding:0;cursor:pointer}#nav button.active{background:#31598B;transform:scale(1.45)}#progress{position:fixed;left:0;bottom:0;height:5px;background:#31598B;z-index:30;transition:width .35s}#overview{display:none;position:fixed;inset:0;background:#F5F4ED;z-index:50;padding:38px 54px;overflow:auto;color:var(--text)}#overview.open{display:block}.overview-head{display:flex;justify-content:space-between;margin-bottom:26px;font-size:24px}.overview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.overview-card{min-height:125px;text-align:left;background:var(--panel);border:1px solid var(--line);border-top:5px solid var(--ink);padding:18px;color:var(--text);cursor:pointer}.overview-card.active{outline:4px solid var(--ink)}.overview-card b{display:block;color:var(--ink);margin-bottom:10px}.overview-card span{font:500 21px/1.3 var(--serif)}
+.figure-frame{height:610px;background:#fff;border:1px solid var(--line);padding:12px;display:grid;place-items:center}.figure-frame img{display:block;max-width:100%;max-height:100%;object-fit:contain}.kind-image .body.with-extra{grid-template-columns:.58fr 1.42fr}.mini-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-content:center}.mini-card{background:var(--panel);border:1px solid var(--line);border-top:6px solid var(--ink);padding:24px;min-height:170px}.mini-card b{display:block;margin-bottom:12px;color:var(--ink);font:600 28px/1.25 var(--serif)}.mini-card p{margin:0;font-size:24px;line-height:1.4}.step-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.step-card{background:var(--panel);border:1px solid var(--line);border-left:7px solid var(--ink);padding:20px 24px;min-height:178px}.step-card .step-label{font-size:20px;font-weight:800;color:var(--ink);letter-spacing:.06em}.step-card .step-formula{margin:10px 0 7px;font:600 25px/1.35 var(--mono)}.step-card .step-result{font-size:26px;color:var(--ink)}.shape-list{display:grid;gap:14px}.shape-row{display:grid;grid-template-columns:100px 95px 1fr;gap:14px;align-items:center;background:var(--panel);border:1px solid var(--line);padding:17px 20px;font-size:24px}.shape-row b{font-size:27px;color:var(--ink)}.compare-pair{display:grid;grid-template-columns:1fr 1fr;gap:18px}.compare-box{background:var(--panel);border:1px solid var(--line);border-top:6px solid var(--ink);padding:22px 26px;font-size:24px;line-height:1.45}.compare-box strong{display:block;color:var(--ink);font-size:28px;margin-bottom:10px}.result-callout{background:#E8EEF6;border:1px solid #A9B8CC;padding:18px 24px;color:var(--ink);font:700 26px/1.35 var(--mono)}
+@media(max-aspect-ratio:16/9){.stage{transform-origin:center center}}@media print{html,body{overflow:visible;background:white}.viewport{position:static;display:block}.stage{transform:none!important;width:auto;height:auto;overflow:visible}.deck{display:block;width:auto;height:auto;transform:none!important}.slide{zoom:.8;page-break-after:always;break-after:page;break-inside:avoid}.slide:last-child{page-break-after:auto}#nav,#progress,#overview{display:none!important}}@page{size:16in 9in;margin:0}
+</style></head><body><div class="viewport"><main class="stage" id="stage"><div class="deck" id="deck">
+<section class="slide dark kind-cover" data-slide-id="s01-outline" data-title="Outline"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 01 / 40</span></div><div class="cover-inner"><p class="eyebrow">WEEK 03 · FOUNDATIONS</p><h1>생성형 AI —<br>텍스트 표현과 신경망 학습</h1><p class="cover-lead">문자열을 계산 가능한 벡터로 바꾸고, 오차를 따라 파라미터를 고치는 전체 흐름</p><div class="cover-map"><article class="group"><h3>텍스트의 계산 표현</h3><ul><li>문자열을 토큰으로 나누고 각 토큰을 사전의 정수 주소인 토큰 ID로 바꾼다.</li><li>BPE가 자주 붙는 이웃 기호를 병합해 사전 크기와 토큰 수를 절충하는 과정을 계산한다.</li><li>학습 코퍼스의 언어 구성이 언어별 토큰 분절과 문맥 비용을 바꾸는 이유를 비교한다.</li></ul></article><article class="group"><h3>파라미터의 학습</h3><ul><li>토큰 ID로 임베딩 표의 행을 조회해 신경망이 계산할 벡터를 얻는다.</li><li>선형층 사이에 비선형 활성함수를 넣어 직선 하나보다 복잡한 관계를 표현한다.</li><li>순전파로 예측과 손실을 계산하고 역전파로 각 파라미터의 기울기를 구한다.</li></ul></article></div></div><div class="slide-foot"><span>텍스트 표현 · 임베딩 · 역전파</span><span class="counter">01 / 40</span></div></section>
+<section class="slide light kind-table" data-slide-id="s02-number-lookup" data-title="토큰 사전에서 나온 ID 열">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 02 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">02 · EXAMPLE</p><h2>토큰 사전에서 나온 ID 열</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3><code>[40, 1842, 9552]</code>의 출처</h3><ul>
+      <li>신경망은 문자열 자체가 아니라 숫자 배열을 곱하고 더하므로, 먼저 문자열을 계산 가능한 주소와 벡터로 바꾼다.</li>
+      <li>토크나이저는 문장을 <code>I</code>, <code> love</code>, <code> AI</code>라는 세 토큰으로 나눈다.</li>
+      <li>각 숫자는 글자에서 계산한 값이 아니라 사전에서 찾은 토큰의 행 주소이다.</li>
+      <li>세 주소를 문장 순서대로 모으면 신경망에 전달할 ID 열이 된다.</li>
+    </ul></article></div><div class="extras"><div class="table-wrap"><table><thead><tr><th>토큰 조각</th><th>사전의 행 주소</th></tr></thead><tbody><tr><td><code>I</code></td><td>40</td></tr><tr><td><code> love</code></td><td>1842</td></tr><tr><td><code> AI</code></td><td>9552</td></tr></tbody></table></div><div class="result-callout">문자열 → 토큰 → [40, 1842, 9552] → 임베딩 벡터</div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">02 / 40</span></div>
+</section>
+<section class="slide light kind-process" data-slide-id="s03-token" data-title="모델의 입력 단위인 토큰">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 03 / 40</span></div>
+  <div class="slide-inner">
+    <header class="title-block"><p class="section-num">03 · PROCESS</p><h2>모델의 입력 단위인 토큰</h2></header>
+    <div class="body with-extra">
+      <div class="groups single"><article class="group"><h3>정의와 확인 기준</h3><ul>
+        <li>토큰은 토크나이저가 한 번에 하나의 ID로 바꾸는 문자열 조각이다.</li>
+        <li>완전한 단어뿐 아니라 단어 일부·문장부호·앞 공백도 각각 토큰이 될 수 있다.</li>
+        <li>예제에서는 문자열 한 개가 순서 있는 네 조각으로 바뀌었는지 확인한다.</li>
+      </ul></article></div>
+      <div class="extras"><pre><code>입력 문자열  : I love AI.
+토큰화 결과 : ["I", " love", " AI", "."]
+확인        : 4개 조각, 원래 순서 유지</code></pre></div>
+    </div>
+  </div>
+  <div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">03 / 40</span></div>
+</section>
+<section class="slide light kind-process" data-slide-id="s04-boundary" data-title="공백과 문장부호의 정보">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 04 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">04 · PROCESS</p><h2>공백과 문장부호의 정보</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>위치별 경계 표현</h3><ul>
+      <li>표시 기호 <code>␠</code>는 눈에 안 보이는 앞 공백 한 칸을 뜻한다.</li>
+      <li><code>love</code>와 <code>␠love</code>는 같은 글자열이어도 문장 속 위치가 달라 별도 토큰이 될 수 있다.</li>
+      <li><code>?</code>를 보존해야 다음 토큰 예측에서 평서문과 질문의 끝을 구분할 수 있다.</li>
+    </ul></article></div><div class="extras"><pre><code>위치          입력       표시한 토큰
+문장 처음     "love"  → ["love"]
+앞 단어 뒤    " love" → ["␠love"]
+문장 끝       "AI?"   → ["AI", "?"]
+
+※ ␠는 설명용 표시이며 실제 입력은 공백이다.</code></pre></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">04 / 40</span></div>
+</section>
+<section class="slide light kind-table" data-slide-id="s05-토큰-id와-사전-주소" data-title="토큰 ID와 사전 주소"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 05 / 40</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">05 · TABLE</p><h2>토큰 ID와 사전 주소</h2></header><div class="body with-extra"><div class="groups single"><article class="group"><h3>사전과 인코딩</h3><ul><li>사전은 각 토큰 문자열과 고유한 정수 ID를 연결한 표이다.</li><li>인코딩은 토큰을 ID로 바꾸고 디코딩은 ID를 다시 토큰 문자열로 복원한다.</li><li>같은 토크나이저와 같은 사전 버전을 사용해야 같은 문자열이 같은 ID 열로 바뀐다.</li></ul></article></div><div class="extras"><div class="table-wrap"><table><thead><tr><th>토큰</th><th>토큰 ID</th></tr></thead><tbody><tr><td><code>I</code></td><td>40</td></tr><tr><td><code> love</code></td><td>1842</td></tr><tr><td><code> AI</code></td><td>9552</td></tr></tbody></table></div></div></div></div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">05 / 40</span></div></section>
+<section class="slide light kind-compare" data-slide-id="s06-category-id" data-title="토큰 ID의 범주형 성격">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 06 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">06 · COMPARE</p><h2>토큰 ID의 범주형 성격</h2></header>
+    <div class="body"><div class="groups grid-2"><article class="group"><h3>하면 안 되는 계산</h3><ul>
+      <li><code>1842 &gt; 40</code>은 <code>love</code>가 <code>I</code>보다 중요하다는 뜻이 아니다.</li>
+      <li><code>1842-40=1802</code>도 두 토큰의 의미 거리가 아니다.</li>
+      <li>ID는 크기를 재는 값이 아니라 항목을 구분하는 주소이다.</li>
+    </ul></article><article class="group"><h3>실제로 하는 계산</h3><ul>
+      <li><code>E[40]</code>은 <code>I</code>의 임베딩 행을 조회한다.</li>
+      <li><code>E[1842]</code>는 <code> love</code>의 임베딩 행을 조회한다.</li>
+      <li>의미 관계는 ID 숫자가 아니라 조회된 학습 벡터에서 계산한다.</li>
+    </ul></article></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">06 / 40</span></div>
+</section>
+<section class="slide light kind-compare" data-slide-id="s07-단어-단위-토큰화의-한계" data-title="단어 단위 토큰화의 한계"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 07 / 40</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">07 · COMPARE</p><h2>단어 단위 토큰화의 한계</h2></header><div class="body with-extra"><div class="groups single"><article class="group"><h3>사전에 없는 단어</h3><ul><li>단어마다 ID 하나를 주면 신조어·오타·고유명사가 늘어날 때 사전도 계속 커진다.</li><li>사전에 없는 단어를 하나의 미지 토큰으로 바꾸면 서로 다른 문자열의 정보가 같은 ID로 사라진다.</li><li><code>play</code>, <code>played</code>, <code>playing</code>을 모두 별도 항목으로 두면 공유하는 형태를 토큰 단계에서 활용하기 어렵다.</li></ul></article></div><div class="extras"><div class="compare-pair"><article class="compare-box"><strong>사전에 등록된 단어</strong><code>play</code> · <code>played</code> · <code>playing</code><br>비슷한 단어가 각각 별도 행을 차지한다.</article><article class="compare-box"><strong>사전에 없는 단어</strong><code>playful → [UNK]</code><br><code>playroom → [UNK]</code><br>서로 다른 문자열이 같은 ID가 된다.</article></div><div class="result-callout"><code>play</code>라는 공통 조각을 재사용하지 못하는 것이 단어 단위 방식의 한계다.</div></div></div></div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">07 / 40</span></div></section>
+<section class="slide light kind-compare" data-slide-id="s08-character-cost" data-title="문자 토큰이 늘리는 처리량">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 08 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">08 · COMPARE</p><h2>문자 토큰이 늘리는 처리량</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3><code>cats run</code>의 쉬운 비교</h3><ul>
+      <li>단어 단위는 <code>[cats][run]</code>의 2개, 문자 단위는 공백까지 포함해 8개 토큰이다.</li>
+      <li>문자 방식은 임베딩 표에서 2행이 아니라 8행을 조회하고 뒤 계산도 8개 위치를 처리한다.</li>
+      <li>모든 위치 쌍을 비교하는 자기어텐션에서는 점수 칸이 <code>T²</code>에 비례해 늘어난다.</li>
+    </ul></article></div><div class="extras"><div class="compare-pair"><div class="compare-box"><strong>단어 단위 · T=2</strong><code>[cats] [run]</code><br>임베딩 2개<br>비교 칸 <b>2²=4</b></div><div class="compare-box"><strong>문자 단위 · T=8</strong><code>[c][a][t][s][␠][r][u][n]</code><br>임베딩 8개<br>비교 칸 <b>8²=64</b></div></div><div class="result-callout">토큰 4배 → 이 예의 어텐션 비교 칸 16배</div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">08 / 40</span></div>
+</section>
+<section class="slide light kind-process" data-slide-id="s09-서브워드의-절충" data-title="서브워드의 절충"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 09 / 40</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">09 · PROCESS</p><h2>서브워드의 절충</h2></header><div class="body with-extra"><div class="groups single"><article class="group"><h3>조각의 크기</h3><ul><li>서브워드는 단어보다 작고 문자 하나보다 클 수 있는 재사용 가능한 문자열 조각이다.</li><li>자주 등장하는 문자열은 큰 조각으로 유지하고 드문 문자열은 이미 아는 작은 조각으로 나눈다.</li><li>서브워드는 사전 크기를 제한하면서 미지 문자열을 줄이고 입력 열이 지나치게 길어지는 문제를 완화한다.</li></ul></article></div><div class="extras"><pre class=""><code>playing → [play] [ing]
+lowest  → [low] [est]</code></pre></div></div></div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">09 / 40</span></div></section>
+<section class="slide light kind-process" data-slide-id="s10-bpe의-최빈-이웃-쌍-병합" data-title="BPE의 최빈 이웃 쌍 병합"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 10 / 40</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">10 · PROCESS</p><h2>BPE의 최빈 이웃 쌍 병합</h2></header><div class="body with-extra"><div class="groups single"><article class="group"><h3>핵심 규칙</h3><ul><li>BPE(Byte Pair Encoding)는 현재 코퍼스에서 바로 이웃한 기호 쌍의 등장 횟수를 센다.</li><li>가장 자주 등장한 쌍을 새 기호로 합치고 코퍼스의 해당 쌍을 모두 치환한다.</li><li>정한 병합 횟수만큼 반복한 뒤 최종 사전과 순서가 있는 병합 규칙을 저장한다.</li></ul></article></div><div class="extras"><pre class=""><code>초기 기호 → 이웃 쌍 세기 → 최빈 쌍 병합 → 다시 세기 → 반복</code></pre></div></div></div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">10 / 40</span></div></section>
+<section class="slide light kind-compare" data-slide-id="s11-word-boundary" data-title="단어 끝을 표시하는 경계 기호">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 11 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">11 · EXAMPLE</p><h2>단어 끝을 표시하는 <code>&lt;/w&gt;</code></h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>같은 <code>low</code>, 다른 위치</h3><ul>
+      <li><code>&lt;/w&gt;</code>는 바로 앞 글자가 단어의 마지막임을 표시한다.</li>
+      <li><code>low</code>에는 <code>(w,&lt;/w&gt;)</code>, <code>lower</code>에는 <code>(w,e)</code>가 생긴다.</li>
+      <li>병합기는 이 차이로 단어 끝의 <code>low</code>와 더 이어지는 <code>low...</code>를 구분한다.</li>
+    </ul></article></div><div class="extras"><div class="compare-pair"><div class="compare-box"><strong>경계 기호 있음</strong><code>l o w &lt;/w&gt;</code><br><code>l o w e r &lt;/w&gt;</code><br><b>(w,&lt;/w&gt;) ≠ (w,e)</b></div><div class="compare-box"><strong>반례: 경계 기호 없음</strong><code>l o w</code><br><code>l o w e r</code><br><code>l-o-w</code>만 보면 끝인지 모름</div></div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">11 / 40</span></div>
+</section>
+<section class="slide light kind-table" data-slide-id="s12-first-merge" data-title="첫 이웃 쌍 병합">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 12 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">12 · TABLE</p><h2>첫 이웃 쌍 병합</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>빈도 계산과 동률 처리</h3><ul>
+      <li><code>(e,s)</code>는 <code>newest</code> 6회와 <code>widest</code> 3회를 더해 9회이다.</li>
+      <li><code>(s,t)</code>도 9회이고 <code>(l,o)</code>는 7회이므로 최댓값에는 동률이 있다.</li>
+      <li>이 예제는 미리 정한 사전순 규칙으로 <code>(e,s)</code>를 골라 <code>es</code>로 치환한다.</li>
+    </ul></article></div><div class="extras"><div class="table-wrap"><table><thead><tr><th>이웃 쌍</th><th>빈도</th><th>판정</th></tr></thead><tbody><tr><td><code>(e,s)</code></td><td>9</td><td>동률 규칙으로 선택</td></tr><tr><td><code>(s,t)</code></td><td>9</td><td>다음 후보</td></tr><tr><td><code>(l,o)</code></td><td>7</td><td>보류</td></tr></tbody></table></div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">12 / 40</span></div>
+</section>
+<section class="slide light kind-table" data-slide-id="s13-recount-after-merge" data-title="첫 병합 뒤의 빈도 재계산">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 13 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">13 · CALCULATION</p><h2>첫 병합 뒤의 빈도 재계산</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3><code>e+s→es</code> 다음의 선택</h3><ul>
+      <li><code>newest</code>와 <code>widest</code>의 모든 <code>e s</code>를 <code>es</code>로 바꾼 뒤 이웃 쌍을 다시 센다.</li>
+      <li><code>(es,t)</code>와 <code>(t,&lt;/w&gt;)</code>가 각각 <code>6+3=9회</code>로 다시 동률이다.</li>
+      <li>앞 장과 같은 사전순 규칙을 적용해 다음 병합으로 <code>(es,t)</code>를 선택한다.</li>
+    </ul></article></div><div class="extras"><pre><code>newest ×6 → n e w es t &lt;/w&gt;
+widest ×3 → w i d es t &lt;/w&gt;</code></pre><div class="table-wrap"><table><thead><tr><th>다시 센 쌍</th><th>계산</th><th>빈도</th></tr></thead><tbody><tr><td><code>(es,t)</code></td><td>6+3</td><td><b>9</b></td></tr><tr><td><code>(t,&lt;/w&gt;)</code></td><td>6+3</td><td><b>9</b></td></tr><tr><td><code>(l,o)</code></td><td>5+2</td><td>7</td></tr></tbody></table></div><div class="result-callout">사전순 동률 해소 → es+t→est</div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">13 / 40</span></div>
+</section>
+<section class="slide light kind-process" data-slide-id="s14-미등록-단어의-조각-인코딩" data-title="미등록 단어의 조각 인코딩"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 14 / 40</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">14 · PROCESS</p><h2>미등록 단어의 조각 인코딩</h2></header><div class="body with-extra"><div class="groups single"><article class="group"><h3><code>lowest</code> 인코딩</h3><ul><li>새 단어를 <code>l o w e s t &lt;/w&gt;</code>로 펼치고 학습 때 저장한 병합 규칙을 같은 순서로 적용한다.</li><li>앞에서 확인한 규칙은 <code>e+s→es</code>, <code>es+t→est</code>이다.</li><li><code>low est&lt;/w&gt;</code>까지 만들려면 뒤 라운드에서 <code>l+o</code>, <code>lo+w</code>, <code>est+&lt;/w&gt;</code>도 학습했다는 전제가 필요하다.</li></ul></article></div><div class="extras"><pre><code>확인한 규칙: e+s → es, es+t → est<br>뒤 라운드 가정: l+o → lo, lo+w → low, est+&lt;/w&gt; → est&lt;/w&gt;<br><br>l o w e s t &lt;/w&gt; → l o w es t &lt;/w&gt; → l o w est &lt;/w&gt;<br>→ lo w est &lt;/w&gt; → low est &lt;/w&gt; → low est&lt;/w&gt;</code></pre></div></div></div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">14 / 40</span></div></section>
+<section class="slide light kind-compare" data-slide-id="s15-byte-bpe-difference" data-title="글자 BPE와 바이트 수준 BPE의 차이">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 15 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">15 · COMPARE</p><h2>글자 BPE와 바이트 수준 BPE의 차이</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>왜 지금 바이트를 배우는가</h3><ul>
+      <li>앞 BPE는 글자를 초기 기호로 삼으므로 글자 사전에 없는 새 문자는 시작조차 못 할 수 있다.</li>
+      <li>바이트 수준 BPE는 병합 규칙은 유지하고 출발 기호만 256개 바이트 값으로 바꾼다.</li>
+      <li>표현 불가능 문제를 해결한 뒤 다음 장에서 토큰 수와 계산 비용을 따로 비교한다.</li>
+    </ul></article></div><div class="extras"><div class="compare-pair"><div class="compare-box"><strong>앞의 글자 BPE</strong>출발: <code>l,o,w,…</code><br>같은 규칙: 최빈 이웃 쌍 병합<br>한계: 사전에 없는 새 글자</div><div class="compare-box"><strong>바이트 수준 BPE</strong>출발: <code>00~FF</code> 256개<br>같은 규칙: 최빈 이웃 쌍 병합<br>보장: 모든 바이트 열 표현</div></div><div class="result-callout">처음 보는 ‘가’ → UTF-8 [EA, B0, 80]에서 시작</div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">15 / 40</span></div>
+</section>
+<section class="slide light kind-compare" data-slide-id="s16-tokenizer-criteria" data-title="토크나이저의 비용과 정보 단위">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 16 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">16 · COMPARE</p><h2>토크나이저의 비용과 정보 단위</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>비교 기준과 비용의 연결</h3><ul>
+      <li>같은 문장을 넣어 원문 복원 여부와 조각 경계를 먼저 확인한다.</li>
+      <li>토큰 수가 적으면 같은 문맥 창에 더 많은 문자열을 담을 수 있다.</li>
+      <li>병합을 늘리면 토큰 수는 줄지만 임베딩 표의 행 수는 커진다.</li>
+      <li>코퍼스에서 적게 본 언어는 더 작은 조각으로 나뉠 수 있다.</li>
+      <li><code>복원 → 토큰 수 → 실제 학습 성능</code> 순서로 판정한다.</li>
+    </ul></article></div><div class="extras"><div class="compare-pair"><article class="compare-box"><strong>가상 사전 A</strong><code>안녕하세요</code><br>→ <code>[안녕][하세요]</code><br><strong>2토큰</strong></article><article class="compare-box"><strong>가상 사전 B</strong><code>안녕하세요</code><br>→ <code>[안][녕][하][세][요]</code><br><strong>5토큰</strong></article></div><div class="result-callout">둘 다 원문은 복원된다. 이제 토큰 수를 비교하고, 실제 학습 성능까지 확인한다.</div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">16 / 40</span></div>
+</section>
+<section class="slide light kind-table" data-slide-id="s17-id-기반-임베딩-행-조회" data-title="ID 기반 임베딩 행 조회"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 17 / 40</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">17 · TABLE</p><h2>ID 기반 임베딩 행 조회</h2></header><div class="body with-extra"><div class="groups single"><article class="group"><h3>임베딩 표</h3><ul><li>임베딩 표 $E$는 행마다 한 토큰의 학습 가능한 실수 벡터를 저장한 행렬이다.</li><li>어휘 수를 $V$, 임베딩 차원을 $d$라고 하면 $E$의 모양은 <code>(V, d)</code>이다.</li><li>토큰 ID $i$의 임베딩은 행렬곱이 아니라 $E$의 $i$번째 행을 선택한 벡터 $E[i]$이다.</li></ul></article></div><div class="extras"><div class="table-wrap"><table><thead><tr><th>토큰 ID</th><th>조회한 4차원 벡터</th></tr></thead><tbody><tr><td>40</td><td><code>[0.21, -0.11, 0.07, 0.33]</code></td></tr><tr><td>1842</td><td><code>[0.85, 0.62, -0.20, 0.10]</code></td></tr><tr><td>9552</td><td><code>[0.14, 0.77, 0.55, -0.05]</code></td></tr></tbody></table></div></div></div></div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">17 / 40</span></div></section>
+<section class="slide light kind-code" data-slide-id="s18-embedding-shape" data-title="임베딩 Shape의 위치별 의미">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 18 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">18 · SHAPE</p><h2>임베딩 Shape의 위치별 의미</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3><code>(B,T,d)</code>를 왼쪽부터 읽기</h3><ul>
+      <li><code>B</code>는 한 번에 처리할 문장 수, <code>T</code>는 문장마다 맞춘 토큰 수이다.</li>
+      <li><code>d</code>는 토큰 하나를 나타내는 임베딩 숫자 좌표 수이다.</li>
+      <li>문장 1개·토큰 3개·좌표 4개이므로 <code>(1,3)→(1,3,4)</code>가 된다.</li>
+    </ul></article></div><div class="extras"><div class="shape-list"><div class="shape-row"><b>B = 1</b><span>첫째</span><span><code>I love AI</code> 문장 한 개</span></div><div class="shape-row"><b>T = 3</b><span>둘째</span><span><code>I</code> · <code> love</code> · <code> AI</code> 세 토큰</span></div><div class="shape-row"><b>d = 4</b><span>셋째</span><span>각 토큰 벡터의 실수 네 개</span></div></div><pre class="python"><code>import torch
+
+ids = torch.tensor([[40, 1842, 9552]])  # (1, 3)
+emb = torch.nn.Embedding(10000, 4)
+x = emb(ids)
+
+print(ids.shape)  # torch.Size([1, 3])
+print(x.shape)    # torch.Size([1, 3, 4])</code></pre></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">18 / 40</span></div>
+</section>
+<section class="slide light kind-process" data-slide-id="s19-embedding-update" data-title="학습 파라미터인 임베딩 벡터">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 19 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">19 · PROCESS</p><h2>학습 파라미터인 임베딩 벡터</h2></header>
+    <div class="body"><div class="mini-cards"><article class="mini-card"><b>① 초기화와 조회</b><p>작은 난수로 시작한 표에서 <code>40, 1842, 9552</code>의 세 행을 고른다.</p></article><article class="mini-card"><b>② 예측과 손실</b><p>조회한 벡터가 뒤 계산에 참여하고 예측 오차를 만든다.</p></article><article class="mini-card"><b>③ 역전파와 갱신</b><p>손실의 기울기가 사용한 세 행으로 돌아와 그 벡터를 고친다.</p></article></div><div class="result-callout" style="margin-top:24px">초기 벡터의 의미는 고정값이 아니다 · 이번 입력에 사용된 행이 학습으로 달라진다.</div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">19 / 40</span></div>
+</section>
+<section class="slide light kind-image" data-slide-id="s20-xor-visual" data-title="직선 하나로 분리할 수 없는 XOR">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 20 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">20 · VISUAL</p><h2>직선 하나로 분리할 수 없는 XOR</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>그림 읽기</h3><ul>
+      <li>파란 원은 정답 0인 <code>(0,0)</code>과 <code>(1,1)</code>이다.</li>
+      <li>주황 삼각형은 정답 1인 <code>(0,1)</code>과 <code>(1,0)</code>이다.</li>
+      <li>같은 정답끼리 반대 대각선에 있어 어느 직선도 두 종류를 서로 다른 편에 모으지 못한다.</li>
+    </ul></article></div><div class="extras"><div class="figure-frame"><img src="assets/xor_linear_separation_gpt.png" alt="XOR의 네 점과 실패하는 두 직선 분리 시도"></div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">20 / 40</span></div>
+</section>
+<section class="slide light kind-formula" data-slide-id="s21-linear-composition" data-title="선형층 합성의 한계">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 21 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">21 · FORMULA</p><h2>선형층 합성의 한계</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>변환 전과 합친 결과</h3><ul>
+      <li>첫 층 <code>h=2x+1</code>의 출력을 둘째 층 <code>y=3h-4</code>의 입력으로 넣는다.</li>
+      <li>대입하면 <code>y=3(2x+1)-4=6x-1</code>이 되어 다시 선형식 하나가 된다.</li>
+      <li>활성함수가 없다면 층을 늘려도 XOR에 필요한 꺾인 경계를 만들 수 없다.</li>
+    </ul></article></div><div class="extras"><div class="formula-card">\[h=W_1x+b_1,\quad y=W_2h+b_2\]</div><div class="formula-card">\[y=(W_2W_1)x+(W_2b_1+b_2)=W'x+b'\]</div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">21 / 40</span></div>
+</section>
+<section class="slide light kind-compare" data-slide-id="s22-activation-role" data-title="비선형 활성함수의 역할">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 22 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">22 · COMPARE</p><h2>비선형 활성함수의 역할</h2></header>
+    <div class="body"><div class="groups grid-2"><article class="group"><h3>ReLU의 구간 선택</h3><ul>
+      <li><code>ReLU(z)=max(0,z)</code>는 음수 구간을 0으로 막고 양수를 유지한다.</li>
+      <li><code>ReLU(-2)=0</code>, <code>ReLU(3)=3</code>으로 입력 구간마다 다른 규칙이 적용된다.</li>
+      <li>이 꺾임 때문에 앞뒤 선형층을 하나의 선형식으로 합칠 수 없다.</li>
+    </ul></article><article class="group"><h3>Sigmoid의 확률 출력</h3><ul>
+      <li>Sigmoid는 모든 실수를 0과 1 사이 값으로 바꾼다.</li>
+      <li><code>Sigmoid(0)=0.5</code>는 두 범주 사이의 중간 확률이다.</li>
+      <li>출력에 0.5 기준을 적용하면 이진 범주를 판정할 수 있다.</li>
+    </ul></article></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">22 / 40</span></div>
+</section>
+<section class="slide light kind-table" data-slide-id="s23-activation-gradient" data-title="ReLU와 Sigmoid의 기울기">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 23 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">23 · TABLE</p><h2>ReLU와 Sigmoid의 기울기</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>입력값별 역전파 결과</h3><ul>
+      <li>각 행은 같은 입력 <code>z</code>에서 함수 출력과 국소 기울기를 함께 보여 준다.</li>
+      <li>Sigmoid는 <code>z=0</code>에서 0.25이지만 큰 절댓값에서는 기울기가 0에 가까워진다.</li>
+      <li>ReLU는 양수에서 기울기 1을 전달하고 음수에서는 0으로 차단한다.</li>
+    </ul></article></div><div class="extras"><div class="table-wrap"><table><thead><tr><th>함수·입력</th><th>출력</th><th>국소 기울기</th><th>역전파 효과</th></tr></thead><tbody><tr><td>Sigmoid(0)</td><td>0.500</td><td>0.250</td><td>일부 전달</td></tr><tr><td>Sigmoid(6)</td><td>0.998</td><td>0.002</td><td>거의 차단</td></tr><tr><td>ReLU(-2)</td><td>0</td><td>0</td><td>차단</td></tr><tr><td>ReLU(3)</td><td>3</td><td>1</td><td>그대로 전달</td></tr></tbody></table></div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">23 / 40</span></div>
+</section>
+<section class="slide light kind-formula" data-slide-id="s24-two-layer-network" data-title="가장 작은 두 층 신경망">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 24 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">24 · FORMULA</p><h2>가장 작은 두 층 신경망</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>세 단계의 입력과 출력</h3><ul>
+      <li>입력 <code>x</code>와 첫 파라미터가 활성화 전 값 <code>z₁</code>을 만든다.</li>
+      <li>Sigmoid <code>σ</code>가 <code>z₁</code>을 은닉 표현 <code>h</code>로 바꾼다.</li>
+      <li><code>h</code>와 둘째 파라미터가 최종 예측 <code>ŷ</code>을 만든다.</li>
+    </ul></article></div><div class="extras"><div class="formula-card">\[x\xrightarrow{\;w_1x+b_1\;}z_1\xrightarrow{\;\sigma\;}h\xrightarrow{\;w_2h+b_2\;}\hat y\]</div><div class="formula-card">\[z_1=w_1x+b_1,\quad h=\sigma(z_1),\quad \hat y=w_2h+b_2\]</div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">24 / 40</span></div>
+</section>
+<section class="slide light kind-process" data-slide-id="s25-forward-steps" data-title="순전파와 손실의 단계별 계산">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 25 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">25 · CALCULATION</p><h2>순전파와 손실의 단계별 계산</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>끝까지 유지할 한 사례</h3><ul>
+      <li><code>x=1</code>, 정답 <code>y=2.1</code>을 고정한다.</li>
+      <li><code>w₁=0.5, b₁=0, w₂=-0.5, b₂=0.2</code>에서 시작한다.</li>
+      <li>반올림 전 값을 뒤의 역전파·갱신·재검증까지 계속 사용한다.</li>
+    </ul></article></div><div class="extras"><div class="step-grid"><div class="step-card"><span class="step-label">① 첫 선형층</span><div class="step-formula">z₁=(0.5)(1)+0</div><b class="step-result">= 0.500000</b></div><div class="step-card"><span class="step-label">② Sigmoid</span><div class="step-formula">h=1/(1+e⁻⁰·⁵)</div><b class="step-result">= 0.622459</b></div><div class="step-card"><span class="step-label">③ 출력층</span><div class="step-formula">ŷ=(-0.5)(0.622459)+0.2</div><b class="step-result">= -0.111230</b></div><div class="step-card"><span class="step-label">④ 제곱오차</span><div class="step-formula">L=(-0.111230-2.1)²</div><b class="step-result">= 4.889537</b></div></div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">25 / 40</span></div>
+</section>
+<section class="slide light kind-formula" data-slide-id="s26-computation-path" data-title="계산 그래프의 영향 경로">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 26 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">26 · FORMULA</p><h2>계산 그래프의 영향 경로</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>앞 장 값의 영향 경로</h3><ul>
+      <li>노드는 앞 장에서 계산한 <code>z₁=0.5</code>, <code>h=0.6225</code>, <code>ŷ=-0.1112</code>, <code>L=4.8895</code>이다.</li>
+      <li>순전파 화살표는 왼쪽 값이 오른쪽 값의 계산에 사용되었음을 뜻한다.</li>
+      <li>역전파는 같은 경로를 오른쪽부터 거슬러 각 국소 기울기를 곱한다.</li>
+    </ul></article></div><div class="extras"><div class="formula-card">\[w_1\rightarrow z_1(0.5)\rightarrow h(0.6225)\rightarrow \hat y(-0.1112)\rightarrow L(4.8895)\]</div><div class="formula-card">\[\frac{\partial L}{\partial w_1}\leftarrow\frac{\partial L}{\partial \hat y}\cdot\frac{\partial \hat y}{\partial h}\cdot\frac{\partial h}{\partial z_1}\cdot\frac{\partial z_1}{\partial w_1}\]</div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">26 / 40</span></div>
+</section>
+<section class="slide light kind-formula" data-slide-id="s27-loss-to-prediction" data-title="예측값에 대한 손실의 기울기"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 27 / 40</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">27 · BACKPROP ①</p><h2>예측값에 대한 손실의 기울기</h2></header><div class="body with-extra"><div class="groups single"><article class="group"><h3>손실에서 예측으로</h3><ul><li>원래 식은 <code>L=(ŷ-y)²</code>이며, 예측 <code>ŷ</code>가 바뀔 때 손실의 변화를 구한다.</li><li>제곱 미분 <code>(u²)'=2u</code>에 <code>u=ŷ-y</code>를 넣어 <code>2(ŷ-y)</code>가 된다.</li><li>음수 결과는 현재 예측을 키우면 손실이 줄어드는 방향임을 뜻한다.</li></ul></article></div><div class="extras"><div class="formula-card">\[\frac{\partial L}{\partial\hat y}=2(\hat y-y)\]</div><div class="formula-card">\[2(-0.111230-2.1)=\boxed{-4.422459}\]</div></div></div></div><div class="slide-foot"><span>역전파 순서 · ① 손실 → 예측</span><span class="counter">27 / 40</span></div></section>
+<section class="slide light kind-formula" data-slide-id="s28-output-weight-gradient" data-title="출력 가중치에 대한 손실의 기울기"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 28 / 40</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">28 · BACKPROP ②</p><h2>출력 가중치에 대한 손실의 기울기</h2></header><div class="body with-extra"><div class="groups single"><article class="group"><h3>예측에서 <code>w₂</code>로</h3><ul><li>원래 식 <code>ŷ=w₂h+b₂</code>에서 <code>w₂</code>가 1 변하면 예측은 <code>h</code>만큼 변한다.</li><li>따라서 국소 미분은 <code>∂ŷ/∂w₂=h=0.622459</code>이다.</li><li>직전 기울기와 곱하면 출력 가중치가 손실에 미친 전체 변화율이 된다.</li></ul></article></div><div class="extras"><div class="formula-card">\[\frac{\partial L}{\partial w_2}=\frac{\partial L}{\partial\hat y}\frac{\partial\hat y}{\partial w_2}\]</div><div class="formula-card">\[(-4.422459)(0.622459)=\boxed{-2.752801}\]</div></div></div></div><div class="slide-foot"><span>역전파 순서 · ② 예측 → 출력 가중치</span><span class="counter">28 / 40</span></div></section>
+<section class="slide light kind-formula" data-slide-id="s29-output-bias-gradient" data-title="출력 편향에 대한 손실의 기울기"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 29 / 40</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">29 · BACKPROP ③</p><h2>출력 편향에 대한 손실의 기울기</h2></header><div class="body with-extra"><div class="groups single"><article class="group"><h3>예측에서 <code>b₂</code>로</h3><ul><li>원래 식 <code>ŷ=w₂h+b₂</code>에서 <code>b₂</code>는 그대로 한 번 더해진다.</li><li><code>b₂</code>가 1 변하면 예측도 1 변하므로 국소 미분은 <code>∂ŷ/∂b₂=1</code>이다.</li><li>따라서 예측의 기울기가 크기 변화 없이 출력 편향으로 전달된다.</li></ul></article></div><div class="extras"><div class="formula-card">\[\frac{\partial L}{\partial b_2}=\frac{\partial L}{\partial\hat y}\frac{\partial\hat y}{\partial b_2}\]</div><div class="formula-card">\[(-4.422459)(1)=\boxed{-4.422459}\]</div></div></div></div><div class="slide-foot"><span>역전파 순서 · ③ 예측 → 출력 편향</span><span class="counter">29 / 40</span></div></section>
+<section class="slide light kind-formula" data-slide-id="s30-hidden-value-gradient" data-title="은닉값에 대한 손실의 기울기"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 30 / 40</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">30 · BACKPROP ④</p><h2>은닉값에 대한 손실의 기울기</h2></header><div class="body with-extra"><div class="groups single"><article class="group"><h3>예측에서 <code>h</code>로</h3><ul><li>원래 식 <code>ŷ=w₂h+b₂</code>에서 <code>h</code>가 1 변하면 예측은 <code>w₂</code>만큼 변한다.</li><li>따라서 국소 미분은 현재 출력 가중치인 <code>∂ŷ/∂h=w₂=-0.5</code>이다.</li><li>두 음수를 곱해 양수가 되므로 <code>h</code>를 키우면 현재 손실도 커지는 방향이다.</li></ul></article></div><div class="extras"><div class="formula-card">\[\frac{\partial L}{\partial h}=\frac{\partial L}{\partial\hat y}\frac{\partial\hat y}{\partial h}\]</div><div class="formula-card">\[(-4.422459)(-0.5)=\boxed{2.211230}\]</div></div></div></div><div class="slide-foot"><span>역전파 순서 · ④ 예측 → 은닉값</span><span class="counter">30 / 40</span></div></section>
+<section class="slide light kind-formula" data-slide-id="s31-preactivation-gradient" data-title="활성화 전 값에 대한 손실의 기울기"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 31 / 40</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">31 · BACKPROP ⑤</p><h2>활성화 전 값에 대한 손실의 기울기</h2></header><div class="body with-extra"><div class="groups single"><article class="group"><h3>Sigmoid를 통과해 <code>z₁</code>로</h3><ul><li>원래 식 <code>h=σ(z₁)</code>의 국소 미분은 <code>h(1-h)</code>이다.</li><li><code>h=0.622459</code>를 넣으면 국소 변화율은 <code>0.235004</code>이다.</li><li>은닉값의 기울기에 이 변화율을 곱해 활성화 전 값의 책임을 구한다.</li></ul></article></div><div class="extras"><div class="formula-card">\[\frac{\partial L}{\partial z_1}=\frac{\partial L}{\partial h}\frac{\partial h}{\partial z_1},\quad \frac{\partial h}{\partial z_1}=h(1-h)\]</div><div class="formula-card">\[(2.211230)(0.235004)=\boxed{0.519647}\]</div></div></div></div><div class="slide-foot"><span>역전파 순서 · ⑤ 은닉값 → 활성화 전 값</span><span class="counter">31 / 40</span></div></section>
+<section class="slide light kind-formula" data-slide-id="s32-first-layer-gradient" data-title="첫 층 파라미터에 대한 손실의 기울기"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 32 / 40</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">32 · BACKPROP ⑥</p><h2>첫 층 파라미터에 대한 손실의 기울기</h2></header><div class="body with-extra"><div class="groups single"><article class="group"><h3><code>z₁</code>에서 <code>w₁,b₁</code>로</h3><ul><li>원래 식 <code>z₁=w₁x+b₁</code>에서 <code>∂z₁/∂w₁=x=1</code>이다.</li><li>편향은 그대로 더해지므로 <code>∂z₁/∂b₁=1</code>이다.</li><li>직전 기울기 <code>0.519647</code>에 각각 1을 곱해 두 파라미터의 책임을 얻는다.</li></ul></article></div><div class="extras"><div class="formula-card">\[\frac{\partial L}{\partial w_1}=0.519647\times\underbrace{x}_{1}=\boxed{0.519647}\]</div><div class="formula-card">\[\frac{\partial L}{\partial b_1}=0.519647\times\underbrace{1}_{\partial z_1/\partial b_1}=\boxed{0.519647}\]</div></div></div></div><div class="slide-foot"><span>역전파 순서 · ⑥ 첫 층 파라미터</span><span class="counter">32 / 40</span></div></section>
+<section class="slide light kind-formula" data-slide-id="s30-parameter-update" data-title="기울기 반대 방향의 파라미터 갱신">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 33 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">33 · FORMULA</p><h2>기울기 반대 방향의 파라미터 갱신</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>같은 규칙을 적용한 네 결과</h3><ul>
+      <li>학습률 <code>η=0.1</code>로 모든 파라미터에 <code>θ←θ-η∂L/∂θ</code>를 적용한다.</li>
+      <li>양의 기울기인 <code>w₁,b₁</code>은 감소하고 음의 기울기인 <code>w₂,b₂</code>는 증가한다.</li>
+      <li>반올림하지 않은 갱신값을 다음 순전파의 입력으로 전달한다.</li>
+    </ul></article></div><div class="extras"><div class="formula-card">\[\begin{aligned}w_1&=0.5-0.1(0.519647)=\boxed{0.448035}\\b_1&=0-0.1(0.519647)=\boxed{-0.051965}\end{aligned}\]</div><div class="formula-card">\[\begin{aligned}w_2&=-0.5-0.1(-2.752801)=\boxed{-0.224720}\\b_2&=0.2-0.1(-4.422459)=\boxed{0.642246}\end{aligned}\]</div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">33 / 40</span></div>
+</section>
+<section class="slide light kind-formula" data-slide-id="s31-loss-verification" data-title="갱신 후 손실 검증">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 34 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">34 · FORMULA</p><h2>갱신 후 손실 검증</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>동일 입력과 손실식의 재계산</h3><ul>
+      <li>앞 장의 정확한 갱신값과 같은 입력 <code>x=1</code>을 사용해 <code>z₁,h,ŷ</code>을 다시 계산한다.</li>
+      <li>새 예측 <code>0.507921</code>을 같은 정답 <code>2.1</code>과 같은 제곱오차식에 넣는다.</li>
+      <li>손실이 <code>4.889537 → 2.534715</code>로 감소했으므로 이번 갱신은 성공이다.</li>
+    </ul></article></div><div class="extras"><div class="formula-card">\[z_1=0.396071\rightarrow h=0.597743\rightarrow\hat y=0.507921\]</div><div class="formula-card">\[L_{\mathrm{after}}=(0.507921-2.1)^2=\boxed{2.534715}\;\lt\;L_{\mathrm{before}}=4.889537\]</div></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">34 / 40</span></div>
+</section>
+<section class="slide light kind-code" data-slide-id="s32-autograd" data-title="PyTorch 자동미분의 실행 순서">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 35 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">35 · CODE</p><h2>PyTorch 자동미분의 실행 순서</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>행별 역할과 관찰 결과</h3><ul>
+      <li><code>zero_grad → model → loss_fn</code>은 이전 기울기를 비운 뒤 새 예측과 손실을 만든다. 현재 기본 설정에서는 <code>.grad</code>가 <code>None</code>이 된다.</li>
+      <li><code>backward</code> 뒤에는 각 파라미터의 <code>.grad</code>에 앞의 손계산과 같은 기울기가 채워진다.</li>
+      <li><code>step</code> 뒤에는 파라미터가 바뀌며, 다음 순전파에서 손실 감소를 별도로 확인한다.</li>
+    </ul></article></div><div class="extras"><pre class="python"><code>optimizer.zero_grad()       # 이전 .grad 제거(기본: None)
+y_hat = model(x)            # 순전파 → 예측 생성
+loss = loss_fn(y_hat, y)    # 예측·정답 → 손실 생성
+loss.backward()             # .grad에 기울기 누적
+optimizer.step()            # 파라미터 갱신
+
+# 확인: backward 뒤 grad 생성, step 뒤 파라미터 변화</code></pre></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">35 / 40</span></div>
+</section>
+<section class="slide light kind-compare" data-slide-id="s33-xor-verification" data-title="XOR 기반 비선형 신경망 검증">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 36 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">36 · COMPARE</p><h2>XOR 기반 비선형 신경망 검증</h2></header>
+    <div class="body"><div class="groups grid-2"><article class="group"><h3>구성요소의 역할</h3><ul>
+      <li><code>Linear(2,4)</code>는 두 입력을 네 개의 은닉 특성으로 바꾼다.</li>
+      <li><code>ReLU</code>를 빼면 두 선형층은 하나로 합쳐져 XOR을 분리할 수 없다.</li>
+      <li><code>Linear(4,1) → Sigmoid</code>는 은닉 특성을 범주 1의 확률로 바꾼다.</li>
+    </ul></article><article class="group"><h3>관찰 가능한 성공 기준</h3><ul>
+      <li>확률이 0.5 이상이면 1, 미만이면 0으로 판정한다.</li>
+      <li>네 입력의 판정 결과가 순서대로 <code>0,1,1,0</code>이어야 한다.</li>
+      <li>네 결과와 정답이 모두 같을 때 비선형 경계를 학습했다고 판정한다.</li>
+    </ul></article></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">36 / 40</span></div>
+</section>
+<section class="slide light kind-process" data-slide-id="s34-llm-learning" data-title="LLM의 공통 학습 구조">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 37 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">37 · PROCESS</p><h2>LLM의 공통 학습 구조</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>작은 사례에서 규모 확장</h3><ul>
+      <li><code>I love</code>를 토큰 ID와 임베딩 벡터로 바꿔 신경망 블록에 입력한다.</li>
+      <li>모델의 다음 토큰 후보 중 정답 <code>AI</code>에 준 확률로 손실을 계산한다.</li>
+      <li>손실의 기울기는 출력층부터 사용된 임베딩 행까지 돌아가 파라미터를 갱신한다.</li>
+    </ul></article></div><div class="extras"><pre><code>입력 "I love" → 토큰 ID → 임베딩 → 신경망 → 다음 토큰 확률
+                                                   ↓ 정답 "AI"
+임베딩 행 갱신 ← 파라미터 갱신 ← 역전파 ← 교차엔트로피 손실</code></pre></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">37 / 40</span></div>
+</section>
+<section class="slide light kind-process" data-slide-id="s35-end-to-end" data-title="텍스트 표현과 파라미터 학습의 연결">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 38 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">38 · PROCESS</p><h2>텍스트 표현과 파라미터 학습의 연결</h2></header>
+    <div class="body with-extra"><div class="groups single"><article class="group"><h3>하나의 입력을 끝까지 추적</h3><ul>
+      <li><code>I love AI</code>는 토큰 세 개와 ID <code>[40,1842,9552]</code>로 바뀐다.</li>
+      <li>세 ID는 임베딩 표의 세 행을 조회해 배치 축을 유지한 Shape <code>(1,3,d)</code>의 벡터 열을 만든다.</li>
+      <li>예측 손실의 역전파가 이 경로를 거슬러 신경망과 조회된 임베딩 행을 함께 갱신한다.</li>
+    </ul></article></div><div class="extras"><pre><code>문자열       I love AI
+토큰·ID      [I, ␠love, ␠AI] → [40, 1842, 9552]
+임베딩       E[[40, 1842, 9552]] → shape (1, 3, d)
+학습 결과    손실의 기울기 → 신경망 + 사용된 E의 행 갱신</code></pre></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">38 / 40</span></div>
+</section>
+<section class="slide light kind-compare" data-slide-id="s36-scope" data-title="텍스트 표현 학습의 범위와 후속 요소">
+  <div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 39 / 40</span></div>
+  <div class="slide-inner"><header class="title-block"><p class="section-num">39 · COMPARE</p><h2>텍스트 표현 학습의 범위와 후속 요소</h2></header>
+    <div class="body"><div class="groups grid-2"><article class="group"><h3>완료한 학습 대상</h3><ul>
+      <li>문자열을 토큰·토큰 ID·임베딩 벡터로 바꾸는 과정을 설명할 수 있다.</li>
+      <li>한 신경망의 순전파·손실·역전파·갱신을 같은 숫자로 계산할 수 있다.</li>
+      <li>같은 손실식의 전후 값을 비교해 한 단계의 개선을 판정할 수 있다.</li>
+    </ul></article><article class="group"><h3>후속 데이터 구성 요소</h3><ul>
+      <li>슬라이딩 윈도우는 긴 토큰 열의 여러 위치에서 입력과 정답을 만든다.</li>
+      <li>배치 데이터셋은 여러 입력–정답 묶음을 한 번에 계산하게 한다.</li>
+      <li>위치 임베딩은 각 토큰이 문장 안의 어느 위치에 있는지 표시한다.</li>
+    </ul></article></div></div>
+  </div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">39 / 40</span></div>
+</section>
+<section class="slide dark kind-summary" data-slide-id="s37-summary" data-title="Summary"><div class="chrome"><span class="brand"><span class="mark">生</span><b>생성형 AI</b></span><span>3주차 · 40 / 40</span></div><div class="slide-inner"><header class="title-block"><p class="section-num">40 · SUMMARY</p><h2>Summary</h2></header><div class="body "><div class="groups grid-2"><article class="group"><h3>텍스트 표현</h3><ul><li>토큰은 토크나이저가 ID 하나로 바꾸는 문자열 조각이고 토큰 ID는 사전의 주소이다.</li><li>BPE의 병합은 사전 학습 코퍼스의 언어 구성에 따라 미등록 단어 보존과 언어별 분절 정도를 바꾼다.</li><li>임베딩 조회는 입력 모양 <code>(B,T)</code>를 연속 벡터 모양 <code>(B,T,d)</code>로 바꾼다.</li></ul></article><article class="group"><h3>신경망 학습</h3><ul><li>비선형 활성함수는 선형층을 여러 개 쌓은 모델이 선형층 하나로 합쳐지는 것을 막는다.</li><li>역전파는 계산 그래프를 거꾸로 따라 국소 미분을 곱해 각 파라미터의 기울기를 구한다.</li><li>학습은 순전파·손실·역전파·갱신을 반복하고 같은 손실의 감소로 한 단계의 개선을 확인한다.</li></ul></article></div></div></div><div class="slide-foot"><span>생성형 AI — 텍스트 표현과 신경망 학습</span><span class="counter">40 / 40</span></div></section>
+</div><nav id="nav" aria-label="슬라이드 이동"></nav><div id="progress"></div><div id="overview"></div></main></div>
+<script>
+(()=>{const stage=document.getElementById("stage"),deck=document.getElementById("deck"),slides=[...document.querySelectorAll(".slide")],nav=document.getElementById("nav"),progress=document.getElementById("progress"),overview=document.getElementById("overview"),key="kami:"+location.pathname;let index=Math.max(0,Math.min(slides.length-1,Number(localStorage.getItem(key)||0)));slides.forEach((slide,i)=>{const b=document.createElement("button");b.setAttribute("aria-label",`Slide ${i+1}`);b.onclick=()=>go(i);nav.appendChild(b)});function scale(){stage.style.transform=`scale(${Math.min(innerWidth/1920,innerHeight/1080)})`}function apply(){deck.style.transform=`translateX(${-index*1920}px)`;slides.forEach((s,i)=>s.classList.toggle("active",i===index));[...nav.children].forEach((b,i)=>b.classList.toggle("active",i===index));progress.style.width=`${((index+1)/slides.length)*100}%`;localStorage.setItem(key,index)}function go(n){index=Math.max(0,Math.min(slides.length-1,n));apply()}function toggleOverview(){overview.classList.toggle("open");if(!overview.classList.contains("open"))return;overview.innerHTML=`<div class="overview-head"><b>슬라이드 개요 · ESC</b><span>${String(index+1).padStart(2,"0")} / ${String(slides.length).padStart(2,"0")}</span></div><div class="overview-grid"></div>`;const grid=overview.querySelector(".overview-grid");slides.forEach((s,i)=>{const c=document.createElement("button");c.className="overview-card"+(i===index?" active":"");c.innerHTML=`<b>${String(i+1).padStart(2,"0")}</b><span>${s.dataset.title}</span>`;c.onclick=()=>{overview.classList.remove("open");go(i)};grid.appendChild(c)})}addEventListener("resize",scale);addEventListener("keydown",e=>{if(e.key==="Escape"){e.preventDefault();toggleOverview();return}if(overview.classList.contains("open"))return;if(["ArrowRight","PageDown"," ","ArrowDown"].includes(e.key)){e.preventDefault();go(index+1)}else if(["ArrowLeft","PageUp","ArrowUp"].includes(e.key)){e.preventDefault();go(index-1)}else if(e.key==="Home"){go(0)}else if(e.key==="End"){go(slides.length-1)}});let wheel=0,timer;addEventListener("wheel",e=>{if(overview.classList.contains("open"))return;wheel+=e.deltaY+e.deltaX;if(Math.abs(wheel)>70){go(index+(wheel>0?1:-1));wheel=0}clearTimeout(timer);timer=setTimeout(()=>wheel=0,160)},{passive:true});let tx=0,ty=0;addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))go(index+(dx<0?1:-1))},{passive:true});scale();apply()})();
+</script></body></html>
