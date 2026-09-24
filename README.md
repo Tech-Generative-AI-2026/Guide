@@ -8,8 +8,6 @@
 
 현재 공개 범위는 1–5주차입니다.
 
-- [5주차 강의자료 PDF](Lecture_materials/Week5/lecture.pdf)
-
 ## 실습
 
 - [2주차 — 학습률 실패 진단](Week02/practice/README.md)
