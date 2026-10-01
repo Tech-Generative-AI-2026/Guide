@@ -12,3 +12,4 @@
 
 - [2주차 — 학습률 실패 진단](Week02/practice/README.md)
 - [3주차 — 텍스트를 임베딩 벡터로 바꾸기](Week03/practice/README.md)
+- [5주차 — Self-Attention 계산 검증 리포트](Week05/practice/README.md)
