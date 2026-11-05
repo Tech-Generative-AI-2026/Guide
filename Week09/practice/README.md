@@ -16,7 +16,7 @@
 전달물은 다음 두 가지다.
 
 - `loss_tracking.py`: 데이터 준비 → 손실 계산 → 학습 루프 → 기록·판정 → 그래프 저장을 한 번에 실행하는 Python 소스 한 개
-- `loss_curve.png`: epoch 0~12의 학습·검증 손실 곡선
+- `loss_curve.png`: epoch 0–12의 학습·검증 손실 곡선
 
 강의에서 다룬 교차엔트로피 손실, `flatten` 후 `cross_entropy`, 학습·검증 분할, batch 평균 손실, `model.eval()`·`torch.no_grad()` 평가, `zero_grad → backward → step` 학습 루프, 과적합 판정을 하나의 실행 흐름에 넣는다.
 
@@ -26,7 +26,7 @@ Python, PyTorch, matplotlib를 사용한다. GPU는 필요하지 않다. 예시 
 
 제공 파일은 `README.md`와 `verdict_ids.json`이다. 실행할 Python 파일은 직접 작성한다. AI로 코드 초안을 작성해도 되며, 실제 출력이 아래 기대값과 맞는지는 직접 확인한다.
 
-`verdict_ids.json`은 강의와 같은 방식으로 만든 토큰 ID 데이터다. 원문을 문자 기준 90% : 10%로 나눈 뒤 GPT-2 tokenizer로 각각 토큰화했다. 이 소설에 실제로 나오는 GPT-2 토큰 1,417종에만 0~1416의 새 번호를 붙였으므로, 어휘 수가 50,257이 아니라 1,417이다.
+`verdict_ids.json`은 강의와 같은 방식으로 만든 토큰 ID 데이터다. 원문을 문자 기준 90% : 10%로 나눈 뒤 GPT-2 tokenizer로 각각 토큰화했다. 이 소설에 실제로 나오는 GPT-2 토큰 1,417종에만 0–1416의 새 번호를 붙였으므로, 어휘 수가 50,257이 아니라 1,417이다.
 
 | 키 | 값 | 역할 |
 |---|---|---|
@@ -55,9 +55,9 @@ Python, PyTorch, matplotlib를 사용한다. GPU는 필요하지 않다. 예시 
 5. batch 손실: logits [8, 32, 1417]을 `flatten(0, 1)`로 [256, 1417], target을 [256]으로 펴서 `torch.nn.functional.cross_entropy`에 넣는다.
 6. 데이터 전체 손실: 모든 batch 손실의 평균. 평가는 `model.eval()`과 `with torch.no_grad():` 안에서 하고, 끝나면 `model.train()`으로 되돌린다.
 7. 학습 전(epoch 0)에 두 손실을 기록한다.
-8. epoch 1~12마다 학습 batch 18개에 대해 `optimizer.zero_grad()` → 손실 → `loss.backward()` → `optimizer.step()`을 실행하고, epoch이 끝날 때 6번 방식으로 두 손실을 기록한다.
+8. epoch 1–12마다 학습 batch 18개에 대해 `optimizer.zero_grad()` → 손실 → `loss.backward()` → `optimizer.step()`을 실행하고, epoch이 끝날 때 6번 방식으로 두 손실을 기록한다.
 9. 검증 손실이 가장 낮은 epoch를 기록에서 찾아 출력하고, 마지막 epoch의 검증 손실 − 학습 손실을 출력한다.
-10. 가로축 epoch 0~12, 세로축 손실로 두 곡선(학습·검증)을 그려 `loss_curve.png`로 저장한다. 강의는 손실 곡선을 읽는 방법을 다뤘고 그래프를 그리는 코드는 다루지 않았으므로 판정 기준만 제시한다: 가로축에 epoch 0~12의 13개 점, 세로축에 손실, 학습·검증 두 곡선을 구분하는 범례, 실행할 때마다 같은 이름으로 새로 저장. 그래프 코드는 AI와 함께 작성해도 된다.
+10. 가로축 epoch 0–12, 세로축 손실로 두 곡선(학습·검증)을 그려 `loss_curve.png`로 저장한다. 강의는 손실 곡선을 읽는 방법을 다뤘고 그래프를 그리는 코드는 다루지 않았으므로 판정 기준만 제시한다: 가로축에 epoch 0–12의 13개 점, 세로축에 손실, 학습·검증 두 곡선을 구분하는 범례, 실행할 때마다 같은 이름으로 새로 저장. 그래프 코드는 AI와 함께 작성해도 된다.
 
 ## 실행과 확인
 
@@ -108,4 +108,4 @@ final_gap: 3.0016
 
 1. 제출한 Python 소스가 `.py` 파일 한 개이고 100줄 이내인가?
 2. 0으로 초기화한 `Embedding(1417, 1417)`에 대해 `flatten` 후 `cross_entropy`로 batch 손실을, batch 평균으로 데이터 손실을 계산하고, `model.eval()`·`torch.no_grad()` 평가와 `zero_grad → backward → step` 학습 루프를 실제로 실행해 epoch 0의 `7.2563 / 7.2563`과 epoch 12의 `2.8844 / 5.8860`을 출력하는가?
-3. 기록한 검증 손실에서 최저 epoch `6`(5.8678)을 계산해 출력하고, epoch 0~12의 학습·검증 손실 두 곡선을 담은 `loss_curve.png`를 실행으로 생성해 제출했는가?
+3. 기록한 검증 손실에서 최저 epoch `6`(5.8678)을 계산해 출력하고, epoch 0–12의 학습·검증 손실 두 곡선을 담은 `loss_curve.png`를 실행으로 생성해 제출했는가?
