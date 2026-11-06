@@ -6,12 +6,13 @@
 
 첫 화면에서 주차를 선택한 뒤 `강의 시작`을 누르면 발표 덱이 열립니다. 주차 선택 화면으로 돌아갈 때는 브라우저의 뒤로 가기를 사용합니다.
 
-현재 공개 범위는 1–7주차와 9–10주차입니다.
+현재 공개 범위는 1–7주차와 9–11주차입니다.
 
 - [6주차 HTML · Causal attention과 multi-head attention](https://tech-generative-ai-2026.github.io/Guide/Lecture_materials/Week6/)
 - [7주차 HTML · GPT의 구성과 텍스트 생성](https://tech-generative-ai-2026.github.io/Guide/Lecture_materials/Week7/)
 - [9주차 HTML · 언어모델 학습과 손실 분석](https://tech-generative-ai-2026.github.io/Guide/Lecture_materials/Week9/)
 - [10주차 HTML · 텍스트 생성과 모델 활용](https://tech-generative-ai-2026.github.io/Guide/Lecture_materials/Week10/)
+- [11주차 HTML · 분류 미세조정 준비](https://tech-generative-ai-2026.github.io/Guide/Lecture_materials/Week11/)
 
 ## 9주차 실습 제출·마감 공지
 
