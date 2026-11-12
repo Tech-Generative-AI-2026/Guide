@@ -14,13 +14,14 @@
 - [10주차 HTML · 텍스트 생성과 모델 활용](https://tech-generative-ai-2026.github.io/Guide/Lecture_materials/Week10/)
 - [11주차 HTML · 분류 미세조정 준비](https://tech-generative-ai-2026.github.io/Guide/Lecture_materials/Week11/)
 
-## 9주차 실습 제출·마감 공지
+## 기말프로젝트
 
-**2026년 11월 5일(목) 11:00(KST)까지 개인 저장소에 push를 완료한다. 11:05(KST)부터 push 권한을 일괄 회수한다.** 서술형 문제는 다음 실습 수업 시작 30분 후 전원이 함께 응시하며, 마감 시점에 push된 `Week09/` 코드가 문제와 채점의 기준이다. push 권한은 다음 서술형 응시와 평가가 끝날 때까지 닫혀 있다. 서술형 시작 시각 전에 UCheck 출석 또는 지각 기록이 없으면 응시하더라도 0점이다.
-
-제출 파일: `Week09/loss_tracking.py`(100줄 이내), 제공 파일 `Week09/verdict_ids.json`, 실행으로 저장한 `Week09/loss_curve.png`.
-
-[9주차 실습 안내·마감 바로 열기](Week09/practice/README.md#제출-마감-및-push-권한-안내) · [입력 데이터 `verdict_ids.json`](Week09/practice/verdict_ids.json)
+- [기말프로젝트 안내·기본 모델·학습 데이터](FinalProject/README.md)
+- 준비되는 대로, 업데이트할 때마다 본인 저장소의 `FinalProject/submission/`에 commit·push할 것
+- 첫 평가: **2026-11-18(수) 13:00 KST부터 GitHub에 이미 push된 제출 버전으로 채점**
+- 첫 리더보드 공개·발표: **2026-11-19(목) 09:30 KST**
+- 이후 수요일 13:00 평가·목요일 09:30 리더보드 공개. 최종 마감은 **2026-12-10(목) 08:30 KST**, push 권한은 마감까지 유지하며 08:30부터 회수 시작
+- 기말프로젝트 기간에는 주간 실습과 Discord 서술형 평가 대신 프로젝트 진행
 
 ## 실습
 
