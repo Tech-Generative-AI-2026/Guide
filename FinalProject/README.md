@@ -12,6 +12,14 @@
 - 평가 전에 제출 파일 5개를 모두 push할 것. 로컬 commit만 하고 push하지 않은 변경은 평가 대상에서 제외
 - 기말프로젝트 기간에는 최종 마감까지 push 권한 유지
 
+## 평가 방식 변경 안내: 재학습 평가 (2026-11-25(수) 평가부터 예정)
+
+- **2026-11-18(수) 평가까지**: 지금처럼 제출한 `checkpoint.pt`를 그대로 채점
+- **2026-11-25(수) 13:00 평가부터 최종 평가까지**: 교수자 PC가 제출한 학습 코드 `submission/train.py`로 모델을 **처음부터 다시 학습**하고, 그 모델을 채점(재학습 평가)
+- 재학습 데이터: 공개 train/val과 같은 단계 규칙을 쓰지만, 공개하지 않는 **다른 키와 다른 문제**로 만든 train/val
+- 그 전에 `submission/train.py`를 추가해 push할 것. 학습 인터페이스는 [재학습 평가](#재학습-평가-2026-11-25수-평가부터-예정) 참고
+- **바뀌는 이유**: 모든 학생을 컴퓨팅 자원과 무관하게 공정하게 평가하기 위해서입니다. 지금 방식에서는 공개 train에서 추론한 규칙으로 가능한 문제를 모두 만들어 학습하거나, 300,000 parameter보다 큰 모델의 출력으로 학습하면, 학습 방법과 무관하게 점수가 올라갑니다. 재학습 평가에서는 같은 GPU·같은 시간·처음 보는 키의 데이터로 학습하므로, 공개 데이터에서 알아낸 키로 만든 추가 데이터나 미리 학습한 weight는 도움이 되지 않고, **학습 알고리즘과 연구 내용만** 점수를 가릅니다.
+
 ## 1. 용어
 
 - **평문**: 교수자가 만든 제한된 영어 문제와 답. 공개하지 않습니다.
@@ -28,22 +36,23 @@
 | `submission/model.py` | baseline GPT. `build_model(config)`와 `forward(idx)`를 제공 |
 | `submission/tokenizer.py` | 문자 단위 토크나이저. `encode`, `decode`, `SEP_ID`, `EOS_ID` 제공 |
 | `submission/config.json` | 모델 하이퍼파라미터 |
-| `train.py` | baseline 학습. `submission/checkpoint.pt`를 저장 |
+| `submission/train.py` | baseline 학습 코드. 재학습 평가가 실행하는 학습 진입점. `--data`, `--out`, `--seed`를 받음 |
+| `train.py` | `submission/train.py`를 기본값으로 실행하는 바로가기. `submission/checkpoint.pt`를 저장 |
 | `dev_score.py` | 개발 점수 확인. 암호문 답의 완전 일치만 봅니다 |
 | `requirements.txt` | 허용 패키지 목록 (`torch==2.8.0`) |
 
-hidden test(비공개 테스트 문제)는 주지 않습니다. hidden test는 train과 같은 방식으로 만든 처음 보는 문제이며, 단계마다 public split 180문제와 private split 180문제입니다. 최종 채점은 교수자 PC에서 실행합니다.
+hidden test(비공개 테스트 문제)는 주지 않습니다. hidden test는 train에서 배울 수 있는 규칙으로 풀 수 있는 처음 보는 문제이며, 문제의 조합·길이·구조·어휘가 train과 다를 수 있습니다. 문제 수와 구성은 공개하지 않습니다. 최종 채점은 교수자 PC에서 실행합니다.
 
 ## 3. 데이터와 과제
 
 ### 데이터
 
 - 한 줄이 문제 하나입니다. 형식은 `암호문 문제<SEP>암호문 답<EOS>`이고, `<SEP>`와 `<EOS>`는 암호화하지 않는 예약 문자열입니다.
-- 평문은 교수자 생성기가 만든 짧은 영어 문제와 답입니다. 어휘와 문장 틀은 작고 고정되어 있으며, 몇 가지 문제 유형이 같은 비율로 섞여 있습니다. 평문, 문제 유형, 어휘, 변환 규칙은 마감 전에 공개하지 않습니다.
+- 평문은 교수자 생성기가 만든 짧은 영어 문제와 답이며, 몇 가지 문제 유형이 섞여 있습니다. 평문, 문제 유형, 어휘, 변환 규칙은 마감 전에 공개하지 않습니다.
 - 암호화는 공백을 포함한 문자열 전체를 **문자 단위로** 바꿉니다. 같은 평문 글자도 위치와 앞 글자에 따라 다른 기호가 될 수 있어서, 단어를 기호 하나로 바꾸는 사전처럼 풀리지 않습니다. 기호는 ASCII와 Unicode 문자를 함께 씁니다.
-- 1단계 기준으로 한 줄은 토큰 44개 이하이고, 암호문 답은 1–15글자입니다. 해독하면 답은 1–3단어입니다.
-- 단계마다 train 1,800줄, val 180줄, hidden test public 180문제, private 180문제가 있고, 모든 단계는 같은 평문 생성기를 씁니다. 단계가 오르면 변환 규칙만 더 복잡해집니다.
-- hidden test는 train과 같은 생성기로 seed만 바꿔 만들었고, train·val과 평문이 똑같은 문제는 뺐습니다. hidden test에 나오는 단어는 모두 train에 수백 번 나오며, 새로운 것은 **단어들의 조합**뿐입니다. 그래서 train을 외운 모델이 아니라 규칙을 배운 모델이 높은 점수를 받습니다.
+- 공개 1단계 train 기준으로 한 줄은 토큰 44개 이하이고, 암호문 답은 1–15글자입니다. hidden test 문제와 답은 이보다 길 수 있으니 모델의 입력 길이(`block_size`)와 생성 길이에 여유를 두세요.
+- 단계마다 train 1,800줄, val 180줄을 공개합니다. 단계가 오르면 변환 규칙이 더 복잡해집니다.
+- hidden test에는 train·val과 똑같은 문제를 넣지 않습니다. train의 문제를 외운 모델이 아니라 규칙을 배운 모델이 높은 점수를 받도록 만듭니다.
 
 ### 과제: 암호문 문제를 읽고 암호문 답을 생성하기
 
@@ -65,11 +74,17 @@ hidden test(비공개 테스트 문제)는 주지 않습니다. hidden test는 t
 
 ```bash
 pip install -r requirements.txt
-python train.py       # baseline 학습 (CPU 몇 분 이내)
+python train.py       # baseline 학습 (CPU 몇 분 이내). python submission/train.py와 같음
 python dev_score.py   # 개발 점수 확인
 ```
 
-baseline은 3 layer, 4 head, 80 embedding, 246,000 parameter입니다.
+baseline은 3 layer, 4 head, 80 embedding, 246,000 parameter입니다. GPU가 있으면 `submission/train.py`가 GPU로 학습합니다. 교수자 PC GPU에서 baseline 학습은 약 13초입니다.
+
+재학습 평가와 같은 방식으로 실행해 보려면 학습 결과를 다른 폴더에 쓰게 합니다.
+
+```bash
+python submission/train.py --data data --out /tmp/retrain_out --seed 0
+```
 
 ## 5. 목표
 
@@ -82,8 +97,9 @@ baseline은 3 layer, 4 head, 80 embedding, 246,000 parameter입니다.
 
 - parameter 수는 **300,000 이하**입니다. 학습 여부와 무관하게 모델의 모든 parameter와 buffer 원소 수를 더합니다. 학습하지 않게 고정한 weight와 `register_buffer`로 등록한 tensor도 포함됩니다. `train.py`가 출력하는 값이 채점과 같은 방식입니다.
 - 채점 때는 `submission/`의 제출 파일 5개만 복사해 실행합니다. `model.py`와 `tokenizer.py`는 다른 파일을 읽으면 안 되고, 각각 50KB 이하여야 합니다. weight는 `checkpoint.pt`에만 둡니다.
-- 데이터는 이 저장소의 `data/` 암호문만 씁니다. 제공 데이터에서 추론한 규칙으로 직접 만든 추가 데이터는 허용합니다. 이때 생성 코드와 근거를 README에 적습니다.
+- 데이터는 이 저장소의 `data/` 암호문만 씁니다. 2026-11-18 평가까지는 제공 데이터에서 추론한 규칙으로 직접 만든 추가 데이터를 허용했습니다. **재학습 평가부터는** 아래 [재학습 평가의 학습 규칙](#재학습-평가의-학습-규칙)을 따릅니다.
 - 외부 자연어 말뭉치, 외부 pretrained weight, 외부 API 출력 데이터는 사용할 수 없습니다.
+- **300,000 parameter보다 큰 모델을 teacher로 쓰거나, 그 출력으로 distillation하는 것은 금지**입니다. 학습 코드 안에서든 본인 PC에서든 같습니다. 컴퓨팅 자원과 무관하게 모두를 공정하게 평가한다는 원칙 때문입니다.
 - `requirements.txt`에 없는 패키지는 사용할 수 없습니다.
 - `model.py`와 `tokenizer.py`는 import할 때 파일을 쓰거나, 프로세스를 실행하거나, 외부에 접속하면 안 됩니다.
 - hidden test 실행 시에는 네트워크를 쓰지 않습니다.
@@ -107,9 +123,11 @@ FinalProject/submission/
   config.json     # 하이퍼파라미터, vocab_size, block_size, parameter 수
   checkpoint.pt   # model.state_dict()만 저장한 학습 weight
   README.md       # 실험 아이디어, 구조, 변경점, dev 점수, 실패한 시도
+  train.py        # 학습 코드 (재학습 평가부터 필수). checkpoint.pt를 만든 코드와 설정 그대로
 ```
 
-- 학습 코드와 실험 기록은 repo의 다른 위치에 자유롭게 둡니다.
+- 재학습 평가부터는 `train.py`까지 6개가 필수입니다. 학습 코드가 쓰는 보조 모듈은 `submission/` 바로 아래 `.py` 파일로 둡니다. 실험 기록과 실험용 스크립트는 repo의 다른 위치에 자유롭게 둡니다.
+- `checkpoint.pt`는 재학습 평가에서도 계속 제출합니다. 제출한 `train.py`가 이 checkpoint를 만든 코드인지 확인하는 **재현성 비교**에 씁니다.
 - `checkpoint.pt`는 `torch.save(model.state_dict(), ...)`로 저장합니다. 평가는 `torch.load(..., weights_only=True)`로 읽습니다.
 - `checkpoint.pt`는 Git LFS를 쓰지 말고 파일 그대로 commit합니다. 300,000 parameter면 약 1.2MB입니다.
 - `config.json`의 `block_size`는 채점 때 모델에 넣는 최대 길이입니다. 공개 데이터의 가장 긴 `문제<SEP>답<EOS>`보다 짧으면 안 됩니다.
@@ -127,6 +145,40 @@ FinalProject/submission/
 7. score가 같으면 정해진 순서의 **동점 기준**으로 순위를 가릅니다.
 
 `dev_score.py`는 같은 생성 방식으로 val을 풀지만, 해독 대신 암호문 답의 완전 일치만 봅니다. 완전 일치는 문제 점수 10점과 같으므로 부분 점수가 있는 실제 채점보다 엄격한 지표입니다.
+
+위 절차는 2026-11-18 평가까지의 방식입니다. 재학습 평가부터는 1번 다음에 아래 재학습이 들어가고, 2–7번은 다시 학습한 모델로 똑같이 합니다.
+
+### 재학습 평가 (2026-11-25(수) 평가부터 예정)
+
+1. 교수자 PC가 `submission/`에서 `train.py`와 바로 아래의 `.py`·`.json`·`.md` 파일(각 50KB 이하)만 학습 환경에 복사합니다. `checkpoint.pt`와 그 밖의 파일(데이터, weight 파일)은 넣지 않습니다.
+2. 학습 환경은 네트워크가 끊긴 격리 환경입니다. `requirements.txt`와 같은 torch 2.8.0(CUDA 빌드), GPU 1개(GTX 1080 Ti, 11GB), CPU 4개, 메모리 8GB, **학습 시간 상한 600초**입니다. 이 GPU(compute capability 6.1)에서는 `torch.compile`을 쓸 수 없고 bf16은 느리므로, float32 또는 float16 autocast를 씁니다.
+3. 학습 데이터는 공식 단계의 `levelN/train.txt`·`val.txt`뿐입니다. 공개 데이터와 형식·줄 수·단계 규칙·기호 집합이 같고, 키와 문제만 다릅니다. 공개 데이터와 hidden test 정답은 학습 환경에 없습니다.
+4. 실행 명령은 다음과 같습니다. 모든 제출에 같은 seed를 줍니다.
+
+   ```bash
+   python /sub/train.py --data /data --out /out --seed 0
+   ```
+
+   | 인자 | 내용 |
+   |---|---|
+   | `--data` | `level1/train.txt`, `level1/val.txt`처럼 공식 단계 폴더가 있는 읽기 전용 폴더. 단계가 공개되면 `level2/`도 생김 |
+   | `--out` | 쓰기 가능한 유일한 폴더. `checkpoint.pt`(필수)를 저장하고, 필요하면 `config.json`·`tokenizer.py`도 저장 |
+   | `--seed` | 난수 seed. 같은 값이면 같은 결과가 나오도록 씀 |
+
+   `/sub`(제출 코드)는 읽기 전용이므로 학습 결과는 `--out`에만 씁니다. 작업 폴더도 `--out`입니다.
+5. 학습이 끝나면 `--out`의 `checkpoint.pt`와, `--out`에 있으면 그 `config.json`·`tokenizer.py`(없으면 제출본)를 제출한 `model.py`·`README.md`와 묶어 위 평가 절차 3–7번으로 채점합니다. parameter 300,000 상한도 학습이 끝난 모델로 검사합니다.
+6. 재현성 비교를 위해 제출한 `checkpoint.pt`도 기존 방식으로 채점해 교수자가 확인합니다. 두 점수 차이가 학습 seed·GPU 차이로 설명되지 않을 만큼 크면 코드를 직접 확인합니다.
+
+다음 경우는 채점 불가입니다: `train.py` 없음, 학습 오류, 600초 초과, 학습 후 `--out`에 `checkpoint.pt` 없음. 600초를 넘기면 그때까지 학습한 것도 채점하지 않으므로, 학습 코드 안에서 시간을 재서 여유 있게 저장합니다. baseline은 교수자 PC GPU에서 약 13초 걸립니다.
+
+### 재학습 평가의 학습 규칙
+
+- 학습 예는 `--data`의 train/val 줄만 씁니다. 공개 데이터에서 추론한 키·규칙으로 **train에 없는 새 문제와 답을 만드는 생성기**나, 암호문을 평문으로 바꾸는 **해독기**를 학습 코드에 넣지 않습니다. 재학습 데이터는 키가 달라서 공개 데이터로 알아낸 치환표는 맞지 않고, 이런 코드는 학습 알고리즘이 아니라 암호 풀이를 평가하게 만듭니다.
+- train/val 줄을 고르는 순서·비율, curriculum, dropout 같은 regularization, loss를 거는 위치처럼 학습 방법을 바꾸는 것은 자유입니다.
+- 학습 중 만드는 모든 모델(teacher, 보조 모델 포함)은 각각 300,000 parameter 이하이고, 모두 600초 안에서 학습합니다. 외부 데이터·외부 weight·외부 API 출력은 쓸 수 없고 네트워크도 없습니다.
+- 토크나이저가 데이터에서 만든 기호 묶음을 쓴다면, 그 묶음을 `train.py`가 `--data`에서 다시 만들어 `--out/tokenizer.py`로 저장해야 합니다. 문자 단위 토크나이저는 기호 집합이 같으므로 그대로 동작합니다.
+- 하이퍼파라미터는 `train.py`나 `config.json`에 고정합니다. 학습 결과를 보고 고른 checkpoint를 손으로 넣는 방식은 쓸 수 없습니다.
+- 본인 PC의 `data/`로 `python submission/train.py --data data --out <폴더> --seed 0`을 실행해 600초 안에 끝나는지와 dev 점수를 확인합니다. 재학습 데이터는 키만 다르므로 본인 PC의 dev 점수가 재학습 점수의 가장 가까운 추정치입니다.
 
 ### 문제 점수 (문제 하나, 10점 만점)
 
@@ -155,7 +207,7 @@ FinalProject/submission/
 ### score (leaderboard 점수, 0–10000 정수)
 
 ```text
-단계 평균 = 그 단계 hidden test 180문제의 문제 점수 평균 (0–10)
+단계 평균 = 그 단계 hidden test 문제의 문제 점수 평균 (0–10)
 score = int(round(1000 × 공식 단계들의 단계 평균의 평균))
 ```
 
@@ -181,7 +233,9 @@ score가 같으면 다음 순서로 앞섭니다.
 | 후보 답을 여러 개 나열해 하나라도 맞히기 | 위치별로 비교하고 단어를 더 내면 분모가 커지므로, 나열하면 점수가 깎입니다. |
 | 일부만 맞힌 답과 전부 틀린 답이 같은 점수 | 단어 단위 부분 점수를 줍니다. `cat fox dog`(3점)은 `dog fox`(0점)보다 높습니다. |
 | 매주 공개되는 점수에 맞춰 hidden test를 외우기 | 기간 중에는 public split 점수만 공개하고, 최종 순위는 한 번도 공개되지 않은 private split으로 정합니다. |
-| 큰 모델이나 외부 자원으로 이기기 | parameter 300,000 상한과 외부 데이터·weight 금지로 자원 경쟁이 아니라 설계와 실험 경쟁이 되게 합니다. |
+| 큰 모델이나 외부 자원으로 이기기 | parameter 300,000 상한과 외부 데이터·weight 금지로 자원 경쟁이 아니라 설계와 실험 경쟁이 되게 합니다. 재학습 평가부터는 300,000 parameter보다 큰 teacher도 금지하고, 모든 제출을 같은 GPU·같은 600초로 다시 학습합니다. |
+| 공개 train에서 키를 알아내 가능한 문제를 모두 만들어 학습하기 | 재학습 평가는 공개하지 않은 다른 키의 데이터로 학습·채점하므로, 공개 데이터로 알아낸 키로 만든 데이터와 그 데이터로 미리 학습한 weight는 도움이 되지 않습니다. |
+| 본인 PC의 GPU·학습 시간 차이 | 재학습 평가에서는 제출 weight가 아니라 교수자 PC에서 다시 학습한 모델을 채점합니다. 학습 알고리즘이 같으면 누가 학습해도 같은 조건입니다. |
 | 점수 가중치를 임의로 정하기 | 순위는 정수 score 하나로 정하고, 다른 지표는 동점일 때만 정해진 순서로 씁니다. |
 | 채점이 맞았는지 확인할 수 없음 | 마감 후 문제마다 평문 문제, 정답, 모델 답, 해독 결과, 점수 근거를 담은 채점표와 평문을 공개합니다. |
 
@@ -196,16 +250,19 @@ score가 같으면 다음 순서로 앞섭니다.
 - 다음 경우는 순위 없이 사유와 함께 따로 표시합니다. 매주 사유를 확인하고 다음 갱신 전에 고칩니다.
   - 미제출: `FinalProject/submission/` 폴더가 없음
   - 채점 불가: 제출 파일 누락, 소스 50KB 초과, parameter 300,000 초과, `config.json` 오류, 실행 오류, 30분 초과
+  - 재학습 평가부터 추가되는 채점 불가: `train.py` 없음, 학습 오류, 학습 600초 초과, 학습 후 `checkpoint.pt` 없음
+- 재학습 평가부터 leaderboard의 score는 다시 학습한 모델의 점수이고, 학습 시간도 함께 표시합니다.
 - 채점은 네트워크가 끊긴 환경에서 `requirements.txt`와 같은 torch 2.8.0 CPU로 실행합니다. 모델 코드의 `print`는 채점에 영향을 주지 않습니다.
 - 마감일(12/10)은 예외로 08:35 KST부터 최종 제출을 평가하고, 09:30 KST에 private split으로 계산한 최종 순위를 공개합니다.
 
 ## 10. 단계 공개
 
-- 모든 단계의 hidden test는 시작 때 고정되어 있고, 기간 중 바뀌지 않습니다.
+- 재학습 평가는 지금까지와 다른 별도의 hidden test를 씁니다.
+- 단계 공개 판정은 그 갱신의 score와 같은 방식(재학습 평가부터는 다시 학습한 모델)의 점수로 합니다.
 - leaderboard 갱신 때 public split 기준 상위 3개 제출의 현재 단계의 단계 평균이 모두 9.5점 이상이면, 다음 갱신 주기에 다음 단계의 train/val을 `data/levelN/`으로 공개합니다.
 - 새 단계는 공개한 갱신(목요일 09:30) 다음 갱신부터 score에 들어갑니다. 공개 여부와 판정 근거는 `LEADERBOARD.md`에 적습니다. 공개된 단계의 data는 Guide의 `FinalProject/data/levelN/`에서 본인 저장소의 같은 위치로 복사해 씁니다.
 - 마감 2주 전 이후에는 새 단계를 공개하지 않습니다.
-- 평문 문제는 모든 단계에서 같은 생성기로 만들고, 단계마다 변환 규칙만 달라집니다. `train.py`와 `dev_score.py`는 `data/level*/`를 모두 읽습니다.
+- 단계마다 변환 규칙이 달라집니다. `train.py`와 `dev_score.py`는 `data/level*/`를 모두 읽습니다.
 
 ## 11. 연구 주제 예시
 
@@ -217,3 +274,11 @@ score가 같으면 다음 순서로 앞섭니다.
 - optimizer, learning rate schedule, warmup, gradient clipping
 - curriculum learning: 짧은 문제에서 긴 문제로 학습
 - 작은 Transformer와 GRU/LSTM baseline 비교
+
+## 12. 자주 묻는 질문
+
+**Q. 왜 평문 영어가 아니라 암호문인가?**
+평문 영어라면 학습 없이도 문제를 풀 수 있습니다. `model.py`에 "Tom has 3 . Ana has 5"를 읽어 계산하는 규칙 프로그램을 직접 짜거나, 영어 단어 지식을 코드에 넣는 방식입니다. 그러면 점수가 학습 알고리즘이 아니라 손으로 짠 코드로 갈립니다. 암호문은 대응표를 데이터에서 배우지 않으면 풀 수 없는 언어를 만들어, 모델이 학습한 만큼만 점수가 나오게 합니다.
+
+**Q. 왜 교수자 PC에서, 공개하지 않은 새 키로 만든 학습·평가 데이터로 다시 학습하고 평가하는가?**
+공개 데이터의 키는 분석으로 알아낼 수 있고, 키를 알면 가능한 문제를 모두 만들어 학습할 수 있습니다. 새 키와 그 키로 만든 데이터는 평가할 때 교수자 PC에서만 만들어지므로, 공개 데이터로 알아낸 키나 그 키로 만든 데이터, 미리 학습한 weight는 도움이 되지 않습니다. 또 모든 제출을 같은 GPU·같은 600초·같은 seed로 다시 학습하므로, 본인 PC의 자원 차이와 무관하게 학습 알고리즘과 연구 내용만으로 점수가 갈립니다.

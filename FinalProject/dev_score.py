@@ -33,7 +33,7 @@ def greedy(model, prompt_ids, block_size, max_new=64):
 def main():
     config = json.loads((SUB / "config.json").read_text(encoding="utf-8"))
     model = build_model(config)
-    model.load_state_dict(torch.load(SUB / "checkpoint.pt", weights_only=True))
+    model.load_state_dict(torch.load(SUB / "checkpoint.pt", weights_only=True, map_location="cpu"))
     model.eval()
 
     for path in sorted((ROOT / "data").glob("level*/val.txt")):
