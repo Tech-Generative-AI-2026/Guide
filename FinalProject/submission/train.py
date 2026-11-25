@@ -43,6 +43,8 @@ def main():
     config = json.loads((SUB / "config.json").read_text(encoding="utf-8"))
     hp = json.loads((SUB / "train_config.json").read_text(encoding="utf-8"))
     epochs, batch_size = hp["epochs"], hp["batch_size"]
+    if type(batch_size) is not int or not 1 <= batch_size <= 32:
+        raise SystemExit("train_config.json의 batch_size는 1~32 사이의 정수여야 합니다.")
     model = build_model(config).to(device)
     # 채점과 같은 방식: 학습 여부와 무관하게 모든 parameter와 buffer를 센다
     n_params = sum(t.numel() for t in {id(t): t for t in [*model.parameters(), *model.buffers()]}.values())
